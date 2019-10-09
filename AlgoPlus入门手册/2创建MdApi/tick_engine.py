@@ -1,7 +1,11 @@
-#!/usr/bin/env python3
-# encoding:utf-8
+# -*- coding: utf-8 -*-
+# AlgoPlus量化投资开源框架范例
+# 微信公众号：AlgoPlus
+# 项目地址：http://gitee.com/AlgoPlus/AlgoPlus
+# 项目网址：http://www.algo.plus
+# 项目网址：http://www.ctp.plus
+# 项目网址：http://www.7jia.com
 
-from datetime import datetime
 from AlgoPlus.CTP.MdApi import MdApi
 
 
@@ -14,7 +18,6 @@ class TickEngine(MdApi):
     # ///深度行情通知
     def OnRtnDepthMarketData(self, pDepthMarketData):
         print(pDepthMarketData)
-        pass
 
 
 if __name__ == '__main__':
@@ -23,7 +26,7 @@ if __name__ == '__main__':
 
     from account_info import my_future_account_info_dict
 
-    future_account = my_future_account_info_dict['SimNow24']
+    future_account = my_future_account_info_dict['SimNow']
     tick_engine = TickEngine(future_account.server_dict['MDServer']
                              , future_account.broker_id
                              , future_account.investor_id

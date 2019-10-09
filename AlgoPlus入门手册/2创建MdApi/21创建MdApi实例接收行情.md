@@ -23,14 +23,8 @@ MdApi接口函数说明，请参考《[2.MdApi环境初始化与账户登录相�
 
 1. 使用前请在exemplification目录下的account_info.py文件中配置账户参数。
 请注意订阅列表中的合约是否仍为活跃的主力，否则订阅当前主力合约。
-2. TickEngine继承自AlgoTrader.CTP的MdApi类，做了两点改变：
-
-    - [ ] 在父类构造方法执行完成之后调用了Join方法。
-    - [ ] 重写了父类的OnRtnDepthMarketData方法（父类该方法未做任何事情），将收到的行情打印出来。
-    实际应用中，接到行情之后会进行数据处理、分发、保存等操作。
-
-3. 第27行的tick_engine是从TickEngine类创建的实例。AlgoPlus已经对MdApi工作流程中的前六步进行了封装。
-就是说，各位老爷们只需要关心如何在OnRtnDepthMarketData方法中处理、分发行情数据。
+2. 第27行的tick_engine是TickEngine类（继承自AlgoPlus的MdApi类）的实例。AlgoPlus已经对MdApi工作流程进行了封装。
+各位老爷们只需要关心如何在OnRtnDepthMarketData方法中处理、分发行情数据。
 
 >“tick_engine创建之后如何实时订阅行情？” \
 >“如何分发行情延迟最低？” \

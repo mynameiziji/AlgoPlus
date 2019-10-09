@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
+# AlgoPlus量化投资开源框架范例
+# 微信公众号：AlgoPlus
+# 项目地址：http://gitee.com/AlgoPlus/AlgoPlus
+# 项目网址：http://www.algo.plus
+# 项目网址：http://www.ctp.plus
+# 项目网址：http://www.7jia.com
 
-from datetime import datetime
 from AlgoPlus.CTP.TraderApi import TraderApi
 from AlgoPlus.CTP.ApiStruct import *
 import time
@@ -12,12 +17,28 @@ class TraderEngine(TraderApi):
         self.order_ref = 0
         self.Join()
 
-    # 报单
-    def insert_order(self, exchange_ID, instrument_id, order_price, order_vol, order_ref, direction, offset_flag):
-        pBuyOpen = InputOrderField(
+    # 撤单
+    def req_order_action(self, exchange_id, instrument_id, order_ref='', order_sysid=''):
+        input_order_action_field = InputOrderActionField(
             BrokerID=self.broker_id,
             InvestorID=self.investor_id,
-            ExchangeID=exchange_ID,
+            UserID=self.investor_id,
+            ExchangeID=exchange_id,
+            ActionFlag="0",
+            InstrumentID=instrument_id,
+            FrontID=self.front_id,
+            SessionID=self.session_id,
+            OrderSysID=order_sysid,
+            OrderRef=str(order_ref),
+        )
+        l_retVal = self.ReqOrderAction(input_order_action_field)
+
+    # 报单
+    def req_order_insert(self, exchange_id, instrument_id, order_price, order_vol, order_ref, direction, offset_flag):
+        input_order_field = InputOrderField(
+            BrokerID=self.broker_id,
+            InvestorID=self.investor_id,
+            ExchangeID=exchange_id,
             InstrumentID=instrument_id,
             UserID=self.investor_id,
             OrderPriceType="2",
@@ -35,62 +56,47 @@ class TraderEngine(TraderApi):
             IsAutoSuspend=0,
             OrderRef=str(order_ref),
         )
-        l_retVal = self.ReqOrderInsert(pBuyOpen)
+        l_retVal = self.ReqOrderInsert(input_order_field)
 
     # 买开仓
     def buy_open(self, exchange_ID, instrument_id, order_price, order_vol, order_ref):
-        self.insert_order(exchange_ID, instrument_id, order_price, order_vol, order_ref, '0', '0')
+        self.req_order_insert(exchange_ID, instrument_id, order_price, order_vol, order_ref, '0', '0')
 
     # 卖开仓
     def sell_open(self, exchange_ID, instrument_id, order_price, order_vol, order_ref):
-        self.insert_order(exchange_ID, instrument_id, order_price, order_vol, order_ref, '1', '0')
+        self.req_order_insert(exchange_ID, instrument_id, order_price, order_vol, order_ref, '1', '0')
 
     # 买平仓
     def buy_close(self, exchange_ID, instrument_id, order_price, order_vol, order_ref):
         if exchange_ID == "SHFE" or exchange_ID == "INE":
-            self.insert_order(exchange_ID, instrument_id, order_price, order_vol, order_ref, '0', '3')
+            self.req_order_insert(exchange_ID, instrument_id, order_price, order_vol, order_ref, '0', '3')
         else:
-            self.insert_order(exchange_ID, instrument_id, order_price, order_vol, order_ref, '0', '1')
+            self.req_order_insert(exchange_ID, instrument_id, order_price, order_vol, order_ref, '0', '1')
 
     # 卖平仓
     def sell_close(self, exchange_ID, instrument_id, order_price, order_vol, order_ref):
         if exchange_ID == "SHFE" or exchange_ID == "INE":
-            self.insert_order(exchange_ID, instrument_id, order_price, order_vol, order_ref, '1', '3')
+            self.req_order_insert(exchange_ID, instrument_id, order_price, order_vol, order_ref, '1', '3')
         else:
-            self.insert_order(exchange_ID, instrument_id, order_price, order_vol, order_ref, '1', '1')
+            self.req_order_insert(exchange_ID, instrument_id, order_price, order_vol, order_ref, '1', '1')
 
     def Join(self):
         while True:
             if self.status == 0:
+                # ############################################################################# #
+                # 跌停买开仓
+                self.order_ref += 1
+                self.buy_open(test_exchange_id, test_instrument_id, test_fall_limited, test_vol, self.order_ref)
+                self._write_log(f"=>发出涨停买平仓请求！3秒后撤单。")
+                time.sleep(3)
+
+                # 撤单
+                self.req_order_action(test_exchange_id, test_instrument_id, str(self.order_ref))
+                self._write_log(f"=>发出涨停买平仓请求！3秒后进行查订单测试。")
+                time.sleep(3)
 
                 # ############################################################################# #
-                # 涨停买开仓
-                self.order_ref += 1
-                self.buy_open(test_exchange_id, test_instrument_id, test_raise_limited, test_vol, self.order_ref)
-                self._write_log(f"=>发出涨停买开仓请求！10秒后后进行卖平仓测试。")
-                time.sleep(10)
-
-                # 跌停卖平仓
-                self.order_ref += 1
-                self.sell_close(test_exchange_id, test_instrument_id, test_fall_limited, test_vol, self.order_ref)
-                self._write_log(f"=>发出跌停卖平仓请求！10秒后进行卖开仓测试。")
-                time.sleep(10)
-
-                # ############################################################################# #
-                # 跌停卖开仓
-                self.order_ref += 1
-                self.sell_open(test_exchange_id, test_instrument_id, test_fall_limited, test_vol, self.order_ref)
-                self._write_log(f"=>发出跌停卖平仓请求！10秒后进行买平仓测试。")
-                time.sleep(10)
-
-                # 涨停买平仓
-                self.order_ref += 1
-                self.buy_close(test_exchange_id, test_instrument_id, test_raise_limited, test_vol, self.order_ref)
-                self._write_log(f"=>发出涨停买平仓请求！")
-                time.sleep(10)
-
-                # ############################################################################# #
-                print("老爷，这里的测试工作已经按照您的吩咐全部完成！")
+                print("老爷，这里的撤单测试工作已经按照您的吩咐全部完成！")
                 break
 
             time.sleep(1)
@@ -101,8 +107,8 @@ class TraderEngine(TraderApi):
 # 警告：该例子只支持上期所品种平今仓测试
 test_exchange_id = 'SHFE'  # 交易所
 test_instrument_id = 'rb2001'  # 合约代码
-test_raise_limited = 3704  # 涨停板
-test_fall_limited = 3285  # 跌停板
+test_raise_limited = 3763  # 涨停板
+test_fall_limited = 3206  # 跌停板
 test_vol = 1  # 报单手数
 
 if __name__ == "__main__":
@@ -111,7 +117,7 @@ if __name__ == "__main__":
     sys.path.append("..")
     from account_info import my_future_account_info_dict
 
-    future_account = my_future_account_info_dict['SimNow24']
+    future_account = my_future_account_info_dict['SimNow']
     ctp_trader = TraderEngine(future_account.server_dict['TDServer']
                               , future_account.broker_id
                               , future_account.investor_id

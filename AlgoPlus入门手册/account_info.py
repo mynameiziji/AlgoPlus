@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# AlgoPlus量化投资开源框架范例
+# 微信公众号：AlgoPlus
+# 项目地址：http://gitee.com/AlgoPlus/AlgoPlus
+# 项目网址：http://www.algo.plus
+# 项目网址：http://www.ctp.plus
+# 项目网址：http://www.7jia.com
 
 BASE_LOCATION = "."
 MD_LOCATION = BASE_LOCATION + "\\MarketData"

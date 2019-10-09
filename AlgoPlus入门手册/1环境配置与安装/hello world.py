@@ -1,3 +1,11 @@
+# encoding:utf-8
+# AlgoPlus量化投资开源框架范例
+# 微信公众号：AlgoPlus
+# 项目地址：http://gitee.com/AlgoPlus/AlgoPlus
+# 项目网址：http://www.algo.plus
+# 项目网址：http://www.ctp.plus
+# 项目网址：http://www.7jia.com
+
 print("我：伙计！")
 print("pycharm: 大爷，有什么吩咐？")
 print("我：听说来了都要点一份Hello World呀？")

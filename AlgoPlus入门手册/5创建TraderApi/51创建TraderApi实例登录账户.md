@@ -37,9 +37,5 @@ TraderApi更多接口方法说明，请参考：
 # trader_engine.py
 
 1. 使用前请在exemplification目录下的account_info.py文件中配置账户参数。
-2. TraderEngine继承自AlgoTrader.CTP.TraderApi的TraderApi类，做了一点改变：
-
-    - [ ] 在父类构造方法执行完成之后调用了Join方法。
-
-3. 第19行的trader_engine是从TraderEngine类创建的实例。AlgoPlus对TraderApi工作流程中的前八步进行了封装。
-就是说，各位老爷们只需要关心后续买卖撤查相关的操作就可以了。
+2. 第19行的trader_engine是TraderEngine类（继承自AlgoPlus的TraderApi类）的实例。AlgoPlus对TraderApi工作流程进行了封装。
+各位老爷们只需要关心后续买卖撤查相关的操作就可以了。
