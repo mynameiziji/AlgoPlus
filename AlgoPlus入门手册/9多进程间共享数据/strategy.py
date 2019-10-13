@@ -64,26 +64,26 @@ class TraderEngine(TraderApi):
         l_retVal = self.ReqOrderInsert(input_order_field)
 
     # 买开仓
-    def buy_open(self, exchange_ID, instrument_id, order_price, order_vol, order_ref):
-        self.req_order_insert(exchange_ID, instrument_id, order_price, order_vol, order_ref, '0', '0')
+    def buy_open(self, exchange_id, instrument_id, order_price, order_vol, order_ref):
+        self.req_order_insert(exchange_id, instrument_id, order_price, order_vol, order_ref, '0', '0')
 
     # 卖开仓
-    def sell_open(self, exchange_ID, instrument_id, order_price, order_vol, order_ref):
-        self.req_order_insert(exchange_ID, instrument_id, order_price, order_vol, order_ref, '1', '0')
+    def sell_open(self, exchange_id, instrument_id, order_price, order_vol, order_ref):
+        self.req_order_insert(exchange_id, instrument_id, order_price, order_vol, order_ref, '1', '0')
 
     # 买平仓
-    def buy_close(self, exchange_ID, instrument_id, order_price, order_vol, order_ref):
-        if exchange_ID == "SHFE" or exchange_ID == "INE":
-            self.req_order_insert(exchange_ID, instrument_id, order_price, order_vol, order_ref, '0', '3')
+    def buy_close(self, exchange_id, instrument_id, order_price, order_vol, order_ref):
+        if exchange_id == b"SHFE" or exchange_id == b"INE":
+            self.req_order_insert(exchange_id, instrument_id, order_price, order_vol, order_ref, '0', '3')
         else:
-            self.req_order_insert(exchange_ID, instrument_id, order_price, order_vol, order_ref, '0', '1')
+            self.req_order_insert(exchange_id, instrument_id, order_price, order_vol, order_ref, '0', '1')
 
     # 卖平仓
-    def sell_close(self, exchange_ID, instrument_id, order_price, order_vol, order_ref):
-        if exchange_ID == "SHFE" or exchange_ID == "INE":
-            self.req_order_insert(exchange_ID, instrument_id, order_price, order_vol, order_ref, '1', '3')
+    def sell_close(self, exchange_id, instrument_id, order_price, order_vol, order_ref):
+        if exchange_id == b"SHFE" or exchange_id == b"INE":
+            self.req_order_insert(exchange_id, instrument_id, order_price, order_vol, order_ref, '1', '3')
         else:
-            self.req_order_insert(exchange_ID, instrument_id, order_price, order_vol, order_ref, '1', '1')
+            self.req_order_insert(exchange_id, instrument_id, order_price, order_vol, order_ref, '1', '1')
 
     def OnRtnOrder(self, pOrder):
         self.order_status = pOrder.OrderStatus
@@ -115,15 +115,18 @@ class TraderEngine(TraderApi):
         while True:
             if self.status == 0:
                 last_md = None
+                last_md_test = None
                 while not self.md_queue.empty():
                     last_md = self.md_queue.get(block=False)
+                    if last_md.InstrumentID == test_instrument_id:
+                        last_md_test = last_md
 
-                if last_md:
+                if last_md_test:
                     # ############################################################################# #
                     if self.order_ref == 0:
                         # 涨停买开仓
                         self.order_ref += 1
-                        self.buy_open(test_exchange_id, test_instrument_id, last_md.BidPrice1, test_vol, self.order_ref)
+                        self.buy_open(test_exchange_id, test_instrument_id, last_md_test.BidPrice1, test_vol, self.order_ref)
                         self.order_time = datetime.now()
                         self._write_log(f"=>买开仓请求！")
 
@@ -135,7 +138,7 @@ class TraderEngine(TraderApi):
                     if self.order_ref == 1 and self.order_status == b"0":
                         self.order_ref += 1
                         self.order_status = b""
-                        self.sell_close(test_exchange_id, test_instrument_id, last_md.BidPrice1, test_vol, self.order_ref)
+                        self.sell_close(test_exchange_id, test_instrument_id, last_md_test.BidPrice1, test_vol, self.order_ref)
                         self.order_time = datetime.now()
                         self._write_log(f"=>买开仓已全部成交，发出卖平仓请求！")
 
@@ -159,8 +162,8 @@ class TraderEngine(TraderApi):
 # ############################################################################# #
 # 请在这里填写需要测试的合约数据
 # 警告：该例子只支持上期所品种平今仓测试
-test_exchange_id = 'SHFE'  # 交易所
-test_instrument_id = 'ag1912'  # 合约代码
+test_exchange_id = b'SHFE'  # 交易所
+test_instrument_id = b'ag1912'  # 合约代码
 test_vol = 1  # 报单手数
 
 share_queue = Queue(maxsize=100)  # 共享队列
@@ -171,7 +174,7 @@ if __name__ == "__main__":
     sys.path.append("..")
     from account_info import my_future_account_info_dict
 
-    future_account = my_future_account_info_dict['SimNow']
+    future_account = my_future_account_info_dict['SimNow24']
 
     # 行情进程
     md_process = Process(target=TickEngine, args=(future_account.server_dict['MDServer']
