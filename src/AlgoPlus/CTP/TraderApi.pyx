@@ -21,18 +21,18 @@ from AlgoPlus.utils.check_service import  check_service
 # ############################################################################# #
 # ############################################################################# #
 # 请参阅CTP量化开发社区(www.ctp.plus)发布的《CTP官方接口文档》：
-# 《CTP接口工作流程概述》                       | http://ctp.plus/?/article/1
-# 《MdApi接口说明》                             | http://ctp.plus/?/article/2
-# 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
-# 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
-# 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
-# 《TraderApi资金与持仓查询接口说明》           | http://ctp.plus/?/article/6
-# 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
-# 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
-# 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
-# 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
-# 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
-# 《错误信息说明》                              | http://ctp.plus/?/article/12
+# 《CTP量化投资API手册(0)概述》                      | http://7jia.com/70000.html
+# 《CTP量化投资API手册(1)MdApi》                     | http://7jia.com/70001.html
+# 《CTP量化投资API手册(2)TraderApi初始化与登录》     | http://7jia.com/70002.html
+# 《CTP量化投资API手册(3)TraderApi基础交易》         | http://7jia.com/70003.html
+# 《CTP量化投资API手册(4)TraderApi扩展交易》         | http://7jia.com/70004.html
+# 《CTP量化投资API手册(5)TraderApi查资金与持仓》     | http://7jia.com/70005.html
+# 《CTP量化投资API手册(6)TraderApi查保证金与手续费》 | http://7jia.com/70006.html
+# 《CTP量化投资API手册(7)TraderApi期权交易》         | http://7jia.com/70007.html
+# 《CTP量化投资API手册(8)TraderApi银行相关》         | http://7jia.com/70008.html
+# 《CTP量化投资API手册(9)TraderApi查合约》           | http://7jia.com/70009.html
+# 《CTP量化投资API手册(10)TraderApi查其他》          | http://7jia.com/70010.html
+# 《CTP量化投资API手册(11)错误信息》                 | http://7jia.com/70011.html
 # ############################################################################# #
 # ############################################################################# #
 # ############################################################################# #
@@ -127,7 +127,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ############################################################################# #
     # ///获取API的版本信息
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     @staticmethod
     def GetApiVersion(self):
         cdef const_char *result = ''
@@ -140,7 +140,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///获取当前交易日
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def GetTradingDay(self):
         cdef const_char *result = ''
         try:
@@ -164,7 +164,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///删除接口对象本身
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def Release(self):
         try:
             if self._api is not NULL:
@@ -181,7 +181,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ############################################################################# #
     # ///等待接口线程结束运行
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def Join(self):
         cdef int result = -1
         try:
@@ -201,7 +201,7 @@ cdef class TraderApi:
     # ///创建TraderApi
     # ///void Init()
     # ///初始化
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def Init_Base(self):
         cdef int bInit = -1
         try:
@@ -220,7 +220,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # RegisterSpi(CThostFtdcTraderSpi *pSpi)
     # ///注册回调接口
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def Init_Net(self):
         cdef int bInit = -1
         try:
@@ -245,7 +245,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # SubscribePrivateTopic(THOST_TE_RESUME_TYPE nResumeType)
     # ///订阅私有流。
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def SubscribePrivateTopic(self, THOST_TE_RESUME_TYPE nResumeType):
         try:
             if self._api is not NULL:
@@ -255,7 +255,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # SubscribePublicTopic(THOST_TE_RESUME_TYPE nResumeType)
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def SubscribePublicTopic(self, THOST_TE_RESUME_TYPE nResumeType):
         try:
             if self._api is not NULL:
@@ -270,7 +270,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # RegisterFront(char *pszFrontAddress)
     # ///注册前置机网络地址
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def RegisterFront(self, char *pszFrontAddress):
         try:
             if self._api is not NULL:
@@ -281,7 +281,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # RegisterNameServer(char *pszNsAddress)
     # ///注册名字服务器网络地址
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def RegisterNameServer(self, char *pszNsAddress):
         try:
             if self._api is not NULL:
@@ -292,7 +292,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # RegisterFensUserInfo(CThostFtdcFensUserInfoField * pFensUserInfo)
     # ///注册名字服务器用户信息
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def RegisterFensUserInfo(self, size_t pFensUserInfo):
         try:
             if self._api is not NULL:
@@ -306,19 +306,19 @@ cdef class TraderApi:
     # ############################################################################# #
     # ############################################################################# #
     # ///当客户端与交易后台建立起通信连接时（还未登录前），该方法被调用。
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnFrontConnected(self):
         self._write_log("OnFrontConnected")
 
     # ############################################################################# #
     # ///当客户端与交易后台通信连接断开时，该方法被调用。当发生这个情况后，API会自动重新连接，客户端可不做处理。
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnFrontDisconnected(self, nReason):
         self._write_log("OnFrontDisconnected", nReason)
 
     # ############################################################################# #
     # ///心跳超时警告。当长时间未收到报文时，该方法被调用。
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnHeartBeatWarning(self, nTimeLapse):
         self._write_log("OnHeartBeatWarning", nTimeLapse)
 
@@ -329,7 +329,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqAuthenticate(CThostFtdcReqAuthenticateField *pReqAuthenticateField, int nRequestID)
     # ///客户端认证请求
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqAuthenticate(self, pReqAuthenticateField):
         cdef int result = -1
         cdef int nRequestID
@@ -347,7 +347,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///客户端认证响应
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRspAuthenticate(self, pRspAuthenticateField, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspAuthenticate", pRspAuthenticateField)
 
@@ -358,7 +358,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqUserAuthMethod(CThostFtdcReqUserAuthMethodField *pReqUserAuthMethod, int nRequestID)
     # ///查询用户当前支持的认证模式
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqUserAuthMethod(self, pReqUserAuthMethod):
         cdef int result = -1
         cdef int nRequestID
@@ -376,7 +376,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///查询用户当前支持的认证模式的回复
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRspUserAuthMethod(self, pRspUserAuthMethod, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspUserAuthMethod", pRspUserAuthMethod)
 
@@ -387,7 +387,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # RegisterUserSystemInfo(CThostFtdcUserSystemInfoField *pUserSystemInfo)
     # ///注册用户终端信息，用于中继服务器多连接模式
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def RegisterUserSystemInfo(self, pUserSystemInfo):
         cdef int result = -1
         cdef int nRequestID
@@ -410,7 +410,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # SubmitUserSystemInfo(CThostFtdcUserSystemInfoField *pUserSystemInfo)
     # ///上报用户终端信息，用于中继服务器操作员登录模式
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def SubmitUserSystemInfo(self, pUserSystemInfo):
         cdef int result = -1
         cdef int nRequestID
@@ -433,7 +433,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqUserLogin(CThostFtdcReqUserLoginField *pReqUserLoginField, int nRequestID)
     # ///用户登录请求
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqUserLogin(self, pReqUserLogin):
         cdef int result = -1
         cdef int nRequestID
@@ -452,7 +452,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqUserLoginWithCaptcha(CThostFtdcReqUserLoginWithCaptchaField *pReqUserLoginWithCaptcha, int nRequestID)
     # ///用户发出带有图片验证码的登陆请求
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqUserLoginWithCaptcha(self, pReqUserLoginWithCaptcha):
         cdef int result = -1
         cdef int nRequestID
@@ -471,7 +471,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqUserLoginWithText(CThostFtdcReqUserLoginWithTextField *pReqUserLoginWithText, int nRequestID)
     # ///用户发出带有短信验证码的登陆请求
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqUserLoginWithText(self, pReqUserLoginWithText):
         cdef int result = -1
         cdef int nRequestID
@@ -490,7 +490,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqUserLoginWithOTP(CThostFtdcReqUserLoginWithOTPField *pReqUserLoginWithOTP, int nRequestID)
     # ///用户发出带有动态口令的登陆请求
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqUserLoginWithOTP(self, pReqUserLoginWithOTP):
         cdef int result = -1
         cdef int nRequestID
@@ -508,7 +508,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///登录请求响应
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRspUserLogin(self, pRspUserLogin, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspUserLogin", pRspUserLogin)
 
@@ -519,7 +519,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqGenUserCaptcha(CThostFtdcReqGenUserCaptchaField *pReqGenUserCaptcha, int nRequestID)
     # ///用户发出获取图形验证码请求
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqGenUserCaptcha(self, pReqGenUserCaptcha):
         cdef int result = -1
         cdef int nRequestID
@@ -537,7 +537,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///获取图形验证码请求的回复
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRspGenUserCaptcha(self, pRspGenUserCaptcha, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspGenUserCaptcha", pRspGenUserCaptcha)
 
@@ -548,7 +548,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqGenUserText(CThostFtdcReqGenUserTextField *pReqGenUserText, int nRequestID)
     # ///用户发出获取短信验证码请求
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqGenUserText(self, pReqGenUserText):
         cdef int result = -1
         cdef int nRequestID
@@ -566,7 +566,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///获取短信验证码请求的回复
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRspGenUserText(self, pRspGenUserText, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspGenUserText", pRspGenUserText)
 
@@ -577,7 +577,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqUserLogout(CThostFtdcUserLogoutField *pUserLogout, int nRequestID)
     # ///登出请求
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqUserLogout(self, pUserLogout):
         cdef int result = -1
         cdef int nRequestID
@@ -595,7 +595,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///登出请求响应
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRspUserLogout(self, pUserLogout, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspUserLogout", pUserLogout)
 
@@ -606,7 +606,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryInvestor(CThostFtdcQryInvestorField *pQryInvestor, int nRequestID)
     # ///请求查询投资者
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqQryInvestor(self, pQryInvestor):
         cdef int result = -1
         cdef int nRequestID
@@ -624,7 +624,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询投资者响应
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRspQryInvestor(self, pInvestor, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryInvestor", pInvestor)
 
@@ -635,7 +635,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqUserPasswordUpdate(CThostFtdcUserPasswordUpdateField *pUserPasswordUpdate, int nRequestID)
     # ///用户口令更新请求
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqUserPasswordUpdate(self, pUserPasswordUpdate):
         cdef int result = -1
         cdef int nRequestID
@@ -653,7 +653,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///用户口令更新请求响应
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRspUserPasswordUpdate(self, pUserPasswordUpdate, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspUserPasswordUpdate", pUserPasswordUpdate)
 
@@ -664,7 +664,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqTradingAccountPasswordUpdate(CThostFtdcTradingAccountPasswordUpdateField *pTradingAccountPasswordUpdate, int nRequestID)
     # ///资金账户口令更新请求
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqTradingAccountPasswordUpdate(self, pTradingAccountPasswordUpdate):
         cdef int result = -1
         cdef int nRequestID
@@ -682,7 +682,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///资金账户口令更新请求响应
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRspTradingAccountPasswordUpdate(self, pTradingAccountPasswordUpdate, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspTradingAccountPasswordUpdate", pTradingAccountPasswordUpdate)
 
@@ -693,7 +693,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQueryCFMMCTradingAccountToken(CThostFtdcQueryCFMMCTradingAccountTokenField *pQueryCFMMCTradingAccountToken, int nRequestID)
     # ///请求查询监控中心用户令牌
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqQueryCFMMCTradingAccountToken(self, pQueryCFMMCTradingAccountToken):
         cdef int result = -1
         cdef int nRequestID
@@ -711,13 +711,13 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询监控中心用户令牌
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRspQueryCFMMCTradingAccountToken(self, pQueryCFMMCTradingAccountToken, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQueryCFMMCTradingAccountToken", pQueryCFMMCTradingAccountToken)
 
     # ############################################################################# #
     # ///保证金监控中心用户令牌
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRtnCFMMCTradingAccountToken(self, pCFMMCTradingAccountToken):
         self._write_log("OnRtnCFMMCTradingAccountToken", pCFMMCTradingAccountToke)
 
@@ -728,7 +728,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqSettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField *pSettlementInfoConfirm, int nRequestID)
     # ///投资者结算结果确认
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqSettlementInfoConfirm(self, pSettlementInfoConfirm):
         cdef int result = -1
         cdef int nRequestID
@@ -746,7 +746,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///投资者结算结果确认响应
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRspSettlementInfoConfirm(self, pSettlementInfoConfirm, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspSettlementInfoConfirm", pSettlementInfoConfirm)
 
@@ -757,7 +757,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQrySettlementInfoConfirm(CThostFtdcQrySettlementInfoConfirmField *pQrySettlementInfoConfirm, int nRequestID)
     # ///请求查询结算信息确认
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqQrySettlementInfoConfirm(self, pQrySettlementInfoConfirm):
         cdef int result = -1
         cdef int nRequestID
@@ -775,7 +775,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询结算信息确认响应
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRspQrySettlementInfoConfirm(self, pSettlementInfoConfirm, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQrySettlementInfoConfirm", pSettlementInfoConfirm)
 
@@ -786,7 +786,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQrySettlementInfo(CThostFtdcQrySettlementInfoField *pQrySettlementInfo, int nRequestID)
     # ///请求查询投资者结算结果
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def ReqQrySettlementInfo(self, pQrySettlementInfo):
         cdef int result = -1
         cdef int nRequestID
@@ -804,7 +804,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询投资者结算结果响应
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRspQrySettlementInfo(self, pSettlementInfo, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQrySettlementInfo", pSettlementInfo)
 
@@ -814,7 +814,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ############################################################################# #
     # ///合约交易状态通知
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRtnInstrumentStatus(self, pInstrumentStatus):
         self._write_log("OnRtnInstrumentStatus", pInstrumentStatus)
 
@@ -824,7 +824,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ############################################################################# #
     # ///错误应答
-    # 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
+    # 《CTP量化投资API手册(2)TraderApi初始化与登录》 | http://7jia.com/70002.html
     def OnRspError(self, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspError", pRspInfo)
 
@@ -835,7 +835,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqOrderInsert(CThostFtdcInputOrderField *pInputOrder, int nRequestID)
     # ///报单录入请求
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def ReqOrderInsert(self, pInputOrder):
         cdef int result = -1
         cdef int nRequestID
@@ -846,8 +846,6 @@ cdef class TraderApi:
                 address = addressof(pInputOrder)
                 with nogil:
                     result = self._api.ReqOrderInsert(<CThostFtdcInputOrderField *> address, nRequestID)
-                # self.get_local_micro()
-                # self._write_log(self.local_micro.value, pInputOrder)
         except Exception as err_msg:
             self._write_log("ReqOrderInsert", err_msg)
         finally:
@@ -855,31 +853,31 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///报单录入请求响应
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def OnRspOrderInsert(self, pInputOrder, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspOrderInsert", pInputOrder)
 
     # ############################################################################# #
     # ///报单通知
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def OnRtnOrder(self, pOrder):
         self._write_log("OnRtnOrder", pOrder)
 
     # ############################################################################# #
     # ///成交通知
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def OnRtnTrade(self, pTrade):
         self._write_log("OnRtnTrade", pTrade)
 
     # ############################################################################# #
     # ///报单录入错误回报
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def OnErrRtnOrderInsert(self, pInputOrder, pRspInfo):
         self._write_log("OnErrRtnOrderInsert", pInputOrder)
 
     # ############################################################################# #
     # ///提示条件单校验错误
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def OnRtnErrorConditionalOrder(self, pErrorConditionalOrder):
         self._write_log("OnRtnErrorConditionalOrder", pErrorConditionalOrder)
 
@@ -890,7 +888,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryOrder(CThostFtdcQryOrderField *pQryOrder, int nRequestID)
     # ///请求查询报单
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def ReqQryOrder(self, pQryOrder):
         cdef int result = -1
         cdef int nRequestID
@@ -908,7 +906,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询报单响应
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def OnRspQryOrder(self, pOrder, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryOrder", pOrder)
 
@@ -919,7 +917,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryTrade(CThostFtdcQryTradeField *pQryTrade, int nRequestID)
     # ///请求查询成交
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def ReqQryTrade(self, pQryTrade):
         cdef int result = -1
         cdef int nRequestID
@@ -937,7 +935,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询成交响应
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def OnRspQryTrade(self, pTrade, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryTrade", pTrade)
 
@@ -948,7 +946,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqOrderAction(CThostFtdcInputOrderActionField *pInputOrderAction, int nRequestID)
     # ///报单操作请求
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def ReqOrderAction(self, pInputOrderAction):
         cdef int result = -1
         cdef int nRequestID
@@ -959,8 +957,6 @@ cdef class TraderApi:
                 address = addressof(pInputOrderAction)
                 with nogil:
                     result = self._api.ReqOrderAction(<CThostFtdcInputOrderActionField *> address, nRequestID)
-                # self.get_local_micro()
-                # self._write_log(self.local_micro.value, pInputOrderAction)
         except Exception as err_msg:
             self._write_log("ReqOrderAction", err_msg)
         finally:
@@ -968,13 +964,13 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///撤单操作请求响应
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def OnRspOrderAction(self, pInputOrderAction, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspOrderAction", pInputOrderAction)
 
     # ############################################################################# #
     # ///撤单操作错误回报
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def OnErrRtnOrderAction(self, pOrderAction, pRspInfo):
         self._write_log("OnErrRtnOrderAction", pOrderAction)
 
@@ -985,7 +981,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqBatchOrderAction(CThostFtdcInputBatchOrderActionField *pInputBatchOrderAction, int nRequestID)
     # ///批量报单操作请求
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def ReqBatchOrderAction(self, pInputBatchOrderAction):
         cdef int result = -1
         cdef int nRequestID
@@ -1003,13 +999,13 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///批量报单操作请求响应
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def OnRspBatchOrderAction(self, pInputBatchOrderAction, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspBatchOrderAction", pInputBatchOrderAction)
 
     # ############################################################################# #
     # ///批量报单操作错误回报
-    # 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
+    # 《CTP量化投资API手册(3)TraderApi基础交易》                 | http://7jia.com/70003.html
     def OnErrRtnBatchOrderAction(self, pBatchOrderAction, pRspInfo):
         self._write_log("OnErrRtnBatchOrderAction", pBatchOrderAction)
 
@@ -1020,7 +1016,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqParkedOrderInsert(CThostFtdcParkedOrderField *pParkedOrder, int nRequestID)
     # ///预埋单录入请求
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def ReqParkedOrderInsert(self, pParkedOrder):
         cdef int result = -1
         cdef int nRequestID
@@ -1038,7 +1034,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///预埋单录入请求响应
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def OnRspParkedOrderInsert(self, pParkedOrder, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspParkedOrderInsert", pParkedOrder)
 
@@ -1049,7 +1045,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryParkedOrder(CThostFtdcQryParkedOrderField *pQryParkedOrder, int nRequestID)
     # ///请求查询预埋单
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def ReqQryParkedOrder(self, pQryParkedOrder):
         cdef int result = -1
         cdef int nRequestID
@@ -1067,7 +1063,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询预埋单响应
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def OnRspQryParkedOrder(self, pParkedOrder, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryParkedOrder", pParkedOrder)
 
@@ -1078,7 +1074,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqRemoveParkedOrder(CThostFtdcRemoveParkedOrderField *pRemoveParkedOrder, int nRequestID)
     # ///请求删除预埋单
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def ReqRemoveParkedOrder(self, pRemoveParkedOrder):
         cdef int result = -1
         cdef int nRequestID
@@ -1096,7 +1092,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///删除预埋单响应
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def OnRspRemoveParkedOrder(self, pRemoveParkedOrder, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspRemoveParkedOrder", pRemoveParkedOrder)
 
@@ -1107,7 +1103,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqParkedOrderAction(CThostFtdcParkedOrderActionField *pParkedOrderAction, int nRequestID)
     # ///预埋撤单录入请求
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def ReqParkedOrderAction(self, pParkedOrderAction):
         cdef int result = -1
         cdef int nRequestID
@@ -1125,7 +1121,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///预埋撤单录入请求响应
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def OnRspParkedOrderAction(self, pParkedOrderAction, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspParkedOrderAction", pParkedOrderAction)
 
@@ -1136,7 +1132,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryParkedOrderAction(CThostFtdcQryParkedOrderActionField *pQryParkedOrderAction, int nRequestID)
     # ///请求查询预埋撤单
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def ReqQryParkedOrderAction(self, pQryParkedOrderAction):
         cdef int result = -1
         cdef int nRequestID
@@ -1154,7 +1150,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询预埋撤单响应
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def OnRspQryParkedOrderAction(self, pParkedOrderAction, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryParkedOrderAction", pParkedOrderAction)
 
@@ -1165,7 +1161,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqRemoveParkedOrderAction(CThostFtdcRemoveParkedOrderActionField *pRemoveParkedOrderAction, int nRequestID)
     # ///请求删除预埋撤单
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def ReqRemoveParkedOrderAction(self, pRemoveParkedOrderAction):
         cdef int result = -1
         cdef int nRequestID
@@ -1183,7 +1179,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///删除预埋撤单响应
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def OnRspRemoveParkedOrderAction(self, pRemoveParkedOrderAction, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspRemoveParkedOrderAction", pRemoveParkedOrderAction)
 
@@ -1194,7 +1190,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqCombActionInsert(CThostFtdcInputCombActionField *pInputCombAction, int nRequestID)
     # ///申请组合录入请求
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def ReqCombActionInsert(self, pInputCombAction):
         cdef int result = -1
         cdef int nRequestID
@@ -1212,19 +1208,19 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///申请组合录入请求响应
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def OnRspCombActionInsert(self, pInputCombAction, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspCombActionInsert", pInputCombAction)
 
     # ############################################################################# #
     # ///申请组合通知
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def OnRtnCombAction(self, pCombAction):
         self._write_log("OnRtnCombAction", pCombAction)
 
     # ############################################################################# #
     # ///申请组合录入错误回报
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def OnErrRtnCombActionInsert(self, pInputCombAction, pRspInfo):
         self._write_log("OnErrRtnCombActionInsert", pInputCombAction)
 
@@ -1235,7 +1231,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryCombAction(CThostFtdcQryCombActionField *pQryCombAction, int nRequestID)
     # ///请求查询申请组合
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def ReqQryCombAction(self, pQryCombAction):
         cdef int result = -1
         cdef int nRequestID
@@ -1253,7 +1249,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询申请组合响应
-    # 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
+    # 《CTP量化投资API手册(4)TraderApi扩展交易》                 | http://7jia.com/70004.html
     def OnRspQryCombAction(self, pCombAction, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryCombAction", pCombAction)
 
@@ -1264,7 +1260,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryTradingAccount(CThostFtdcQryTradingAccountField *pQryTradingAccount, int nRequestID)
     # ///请求查询资金账户
-    # 《TraderApi资金与持仓查询接口说明》           | http://ctp.plus/?/article/6
+    # 《CTP量化投资API手册(5)TraderApi查资金与持仓》           | http://7jia.com/70005.html
     def ReqQryTradingAccount(self, pQryTradingAccount):
         cdef int result = -1
         cdef int nRequestID
@@ -1282,7 +1278,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询资金账户响应
-    # 《TraderApi资金与持仓查询接口说明》           | http://ctp.plus/?/article/6
+    # 《CTP量化投资API手册(5)TraderApi查资金与持仓》           | http://7jia.com/70005.html
     def OnRspQryTradingAccount(self, pTradingAccount, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryTradingAccount", pTradingAccount)
 
@@ -1293,7 +1289,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQrySecAgentTradingAccount(CThostFtdcQryTradingAccountField *pQryTradingAccount, int nRequestID)
     # ///请求查询资金账户
-    # 《TraderApi资金与持仓查询接口说明》           | http://ctp.plus/?/article/6
+    # 《CTP量化投资API手册(5)TraderApi查资金与持仓》           | http://7jia.com/70005.html
     def ReqQrySecAgentTradingAccount(self, pQryTradingAccount):
         cdef int result = -1
         cdef int nRequestID
@@ -1311,7 +1307,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询资金账户响应
-    # 《TraderApi资金与持仓查询接口说明》           | http://ctp.plus/?/article/6
+    # 《CTP量化投资API手册(5)TraderApi查资金与持仓》           | http://7jia.com/70005.html
     def OnRspQrySecAgentTradingAccount(self, pTradingAccount, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQrySecAgentTradingAccount", pTradingAccount)
 
@@ -1322,7 +1318,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryInvestorPosition(CThostFtdcQryInvestorPositionField *pQryInvestorPosition, int nRequestID)
     # ///请求查询投资者持仓
-    # 《TraderApi资金与持仓查询接口说明》           | http://ctp.plus/?/article/6
+    # 《CTP量化投资API手册(5)TraderApi查资金与持仓》           | http://7jia.com/70005.html
     def ReqQryInvestorPosition(self, pQryInvestorPosition):
         cdef int result = -1
         cdef int nRequestID
@@ -1340,7 +1336,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询投资者持仓响应
-    # 《TraderApi资金与持仓查询接口说明》           | http://ctp.plus/?/article/6
+    # 《CTP量化投资API手册(5)TraderApi查资金与持仓》           | http://7jia.com/70005.html
     def OnRspQryInvestorPosition(self, pInvestorPosition, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryInvestorPosition", pInvestorPosition)
 
@@ -1351,7 +1347,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryInvestorPositionDetail(CThostFtdcQryInvestorPositionDetailField *pQryInvestorPositionDetail, int nRequestID)
     # ///请求查询投资者持仓明细
-    # 《TraderApi资金与持仓查询接口说明》           | http://ctp.plus/?/article/6
+    # 《CTP量化投资API手册(5)TraderApi查资金与持仓》           | http://7jia.com/70005.html
     def ReqQryInvestorPositionDetail(self, pQryInvestorPositionDetail):
         cdef int result = -1
         cdef int nRequestID
@@ -1369,7 +1365,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询投资者持仓明细响应
-    # 《TraderApi资金与持仓查询接口说明》           | http://ctp.plus/?/article/6
+    # 《CTP量化投资API手册(5)TraderApi查资金与持仓》           | http://7jia.com/70005.html
     def OnRspQryInvestorPositionDetail(self, pInvestorPositionDetail, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryInvestorPositionDetail", pInvestorPositionDetail)
 
@@ -1380,7 +1376,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryInvestorPositionCombineDetail(CThostFtdcQryInvestorPositionCombineDetailField *pQryInvestorPositionCombineDetail, int nRequestID)
     # ///请求查询投资者持仓明细
-    # 《TraderApi资金与持仓查询接口说明》           | http://ctp.plus/?/article/6
+    # 《CTP量化投资API手册(5)TraderApi查资金与持仓》           | http://7jia.com/70005.html
     def ReqQryInvestorPositionCombineDetail(self, pQryInvestorPositionCombineDetail):
         cdef int result = -1
         cdef int nRequestID
@@ -1398,7 +1394,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询投资者持仓明细响应
-    # 《TraderApi资金与持仓查询接口说明》           | http://ctp.plus/?/article/6
+    # 《CTP量化投资API手册(5)TraderApi查资金与持仓》           | http://7jia.com/70005.html
     def OnRspQryInvestorPositionCombineDetail(self, pInvestorPositionCombineDetail, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryInvestorPositionCombineDetail", pInvestorPositionCombineDetail)
 
@@ -1409,7 +1405,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQuoteInsert(CThostFtdcInputQuoteField *pInputQuote, int nRequestID)
     # ///报价录入请求
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def ReqQuoteInsert(self, pInputQuote):
         cdef int result = -1
         cdef int nRequestID
@@ -1427,19 +1423,19 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///报价录入请求响应
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnRspQuoteInsert(self, pInputQuote, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQuoteInsert", pInputQuote)
 
     # ############################################################################# #
     # ///报价通知
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnRtnQuote(self, pQuote):
         self._write_log("OnRtnQuote", pQuote)
 
     # ############################################################################# #
     # ///报价录入错误回报
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnErrRtnQuoteInsert(self, pInputQuote, pRspInfo):
         self._write_log("OnErrRtnQuoteInsert", pInputQuote)
 
@@ -1450,7 +1446,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryQuote(CThostFtdcQryQuoteField *pQryQuote, int nRequestID)
     # ///请求查询报价
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def ReqQryQuote(self, pQryQuote):
         cdef int result = -1
         cdef int nRequestID
@@ -1468,7 +1464,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询报价响应
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnRspQryQuote(self, pQuote, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryQuote", pQuote)
 
@@ -1479,7 +1475,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQuoteAction(CThostFtdcInputQuoteActionField *pInputQuoteAction, int nRequestID)
     # ///报价操作请求
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def ReqQuoteAction(self, pInputQuoteAction):
         cdef int result = -1
         cdef int nRequestID
@@ -1497,13 +1493,13 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///报价操作请求响应
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnRspQuoteAction(self, pInputQuoteAction, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQuoteAction", pInputQuoteAction)
 
     # ############################################################################# #
     # ///报价操作错误回报
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnErrRtnQuoteAction(self, pQuoteAction, pRspInfo):
         self._write_log("OnErrRtnQuoteAction", pQuoteAction)
 
@@ -1514,7 +1510,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqForQuoteInsert(CThostFtdcInputForQuoteField *pInputForQuote, int nRequestID)
     # ///询价录入请求
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def ReqForQuoteInsert(self, pInputForQuote):
         cdef int result = -1
         cdef int nRequestID
@@ -1532,19 +1528,19 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///询价录入请求响应
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnRspForQuoteInsert(self, pInputForQuote, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspForQuoteInsert", pInputForQuote)
 
     # ############################################################################# #
     # ///询价通知
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnRtnForQuoteRsp(self, pForQuoteRsp):
         self._write_log("OnRtnForQuoteRsp", pForQuoteRsp)
 
     # ############################################################################# #
     # ///询价录入错误回报
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnErrRtnForQuoteInsert(self, pInputForQuote, pRspInfo):
         self._write_log("OnErrRtnForQuoteInsert", pInputForQuote)
 
@@ -1553,7 +1549,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryForQuote(CThostFtdcQryForQuoteField *pQryForQuote, int nRequestID)
     # ///请求查询询价
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def ReqQryForQuote(self, pQryForQuote):
         cdef int result = -1
         cdef int nRequestID
@@ -1571,7 +1567,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询询价响应
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnRspQryForQuote(self, pForQuote, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryForQuote", pForQuote)
 
@@ -1582,7 +1578,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqExecOrderInsert(CThostFtdcInputExecOrderField *pInputExecOrder, int nRequestID)
     # ///执行宣告录入请求
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def ReqExecOrderInsert(self, pInputExecOrder):
         cdef int result = -1
         cdef int nRequestID
@@ -1600,19 +1596,19 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///执行宣告录入请求响应
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnRspExecOrderInsert(self, pInputExecOrder, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspExecOrderInsert", pInputExecOrder)
 
     # ############################################################################# #
     # ///执行宣告通知
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnRtnExecOrder(self, pExecOrder):
         self._write_log("OnRtnExecOrder", pExecOrder)
 
     # ############################################################################# #
     # ///执行宣告录入错误回报
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnErrRtnExecOrderInsert(self, pInputExecOrder, pRspInfo):
         self._write_log("OnErrRtnExecOrderInsert", pInputExecOrder)
 
@@ -1623,7 +1619,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryExecOrder(CThostFtdcQryExecOrderField *pQryExecOrder, int nRequestID)
     # ///请求查询执行宣告
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def ReqQryExecOrder(self, pQryExecOrder):
         cdef int result = -1
         cdef int nRequestID
@@ -1641,7 +1637,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询执行宣告响应
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnRspQryExecOrder(self, pExecOrder, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryExecOrder", pExecOrder)
 
@@ -1652,7 +1648,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqExecOrderAction(CThostFtdcInputExecOrderActionField *pInputExecOrderAction, int nRequestID)
     # ///执行宣告操作请求
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def ReqExecOrderAction(self, pInputExecOrderAction):
         cdef int result = -1
         cdef int nRequestID
@@ -1670,13 +1666,13 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///执行宣告操作请求响应
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnRspExecOrderAction(self, pInputExecOrderAction, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspExecOrderAction", pInputExecOrderAction)
 
     # ############################################################################# #
     # ///执行宣告操作错误回报
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnErrRtnExecOrderAction(self, pExecOrderAction, pRspInfo):
         self._write_log("OnErrRtnExecOrderAction", pExecOrderAction)
 
@@ -1687,7 +1683,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqOptionSelfCloseInsert(CThostFtdcInputOptionSelfCloseField *pInputOptionSelfClose, int nRequestID)
     # ///期权自对冲录入请求
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def ReqOptionSelfCloseInsert(self, pInputOptionSelfClose):
         cdef int result = -1
         cdef int nRequestID
@@ -1705,19 +1701,19 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///期权自对冲录入请求响应
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnRspOptionSelfCloseInsert(self, pInputOptionSelfClose, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspOptionSelfCloseInsert", pInputOptionSelfClose)
 
     # ############################################################################# #
     # ///期权自对冲通知
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnRtnOptionSelfClose(self, pOptionSelfClose):
         self._write_log("OnRtnOptionSelfClose", pOptionSelfClose)
 
     # ############################################################################# #
     # ///期权自对冲录入错误回报
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnErrRtnOptionSelfCloseInsert(self, pInputOptionSelfClose, pRspInfo):
         self._write_log("OnErrRtnOptionSelfCloseInsert", pInputOptionSelfClose)
 
@@ -1728,7 +1724,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryOptionSelfClose(CThostFtdcQryOptionSelfCloseField *pQryOptionSelfClose, int nRequestID)
     # ///请求查询期权自对冲
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def ReqQryOptionSelfClose(self, pQryOptionSelfClose):
         cdef int result = -1
         cdef int nRequestID
@@ -1746,7 +1742,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询期权自对冲响应
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnRspQryOptionSelfClose(self, pOptionSelfClose, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryOptionSelfClose", pOptionSelfClose)
 
@@ -1757,7 +1753,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqOptionSelfCloseAction(CThostFtdcInputOptionSelfCloseActionField *pInputOptionSelfCloseAction, int nRequestID)
     # ///期权自对冲操作请求
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def ReqOptionSelfCloseAction(self, pInputOptionSelfCloseAction):
         cdef int result = -1
         cdef int nRequestID
@@ -1775,13 +1771,13 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///期权自对冲操作请求响应
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnRspOptionSelfCloseAction(self, pInputOptionSelfCloseAction, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspOptionSelfCloseAction", pInputOptionSelfCloseAction)
 
     # ############################################################################# #
     # ///期权自对冲操作错误回报
-    # 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
+    # 《CTP量化投资API手册(7)TraderApi期权交易》                 | http://7jia.com/70007.html
     def OnErrRtnOptionSelfCloseAction(self, pOptionSelfCloseAction, pRspInfo):
         self._write_log("OnErrRtnOptionSelfCloseAction", pOptionSelfCloseAction)
 
@@ -1792,7 +1788,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqFromBankToFutureByFuture(CThostFtdcReqTransferField *pReqTransfer, int nRequestID)
     # ///期货发起银行资金转期货请求
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def ReqFromBankToFutureByFuture(self, pReqTransfer):
         cdef int result = -1
         cdef int nRequestID
@@ -1810,49 +1806,49 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///期货发起银行资金转期货应答
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRspFromBankToFutureByFuture(self, pReqTransfer, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspFromBankToFutureByFuture", pReqTransfer)
 
     # ############################################################################# #
     # ///期货发起银行资金转期货通知
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRtnFromBankToFutureByFuture(self, pRspTransfer):
         self._write_log("OnRtnFromBankToFutureByFuture", pRspTransfer)
 
     # ############################################################################# #
     # ///期货发起银行资金转期货错误回报
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnErrRtnBankToFutureByFuture(self, pReqTransfer, pRspInfo):
         self._write_log("OnErrRtnBankToFutureByFuture", pReqTransfer)
 
     # ############################################################################# #
     # ///期货发起冲正银行转期货请求，银行处理完毕后报盘发回的通知
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRtnRepealFromBankToFutureByFuture(self, pRspRepeal):
         self._write_log("OnRtnRepealFromBankToFutureByFuture", pRspRepeal)
 
     # ############################################################################# #
     # ///系统运行时期货端手工发起冲正银行转期货请求，银行处理完毕后报盘发回的通知
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRtnRepealFromBankToFutureByFutureManual(self, pRspRepeal):
         self._write_log("OnRtnRepealFromBankToFutureByFutureManual", pRspRepeal)
 
     # ############################################################################# #
     # ///系统运行时期货端手工发起冲正银行转期货错误回报
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnErrRtnRepealBankToFutureByFutureManual(self, pReqRepeal, pRspInfo):
         self._write_log("OnErrRtnRepealBankToFutureByFutureManual", pReqRepeal)
 
     # ############################################################################# #
     # ///银行发起银行资金转期货通知
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRtnFromBankToFutureByBank(self, pRspTransfer):
         self._write_log("OnRtnFromBankToFutureByBank", pRspTransfer)
 
     # ############################################################################# #
     # ///银行发起冲正银行转期货通知
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRtnRepealFromBankToFutureByBank(self, pRspRepeal):
         self._write_log("OnRtnRepealFromBankToFutureByBank", pRspRepeal)
 
@@ -1863,7 +1859,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqFromFutureToBankByFuture(CThostFtdcReqTransferField *pReqTransfer, int nRequestID)
     # ///期货发起期货资金转银行请求
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def ReqFromFutureToBankByFuture(self, pReqTransfer):
         cdef int result = -1
         cdef int nRequestID
@@ -1881,49 +1877,49 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///期货发起期货资金转银行应答
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRspFromFutureToBankByFuture(self, pReqTransfer, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspFromFutureToBankByFuture", pReqTransfer)
 
     # ############################################################################# #
     # ///期货发起期货资金转银行通知
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRtnFromFutureToBankByFuture(self, pRspTransfer):
         self._write_log("OnRtnFromFutureToBankByFuture", pRspTransfer)
 
     # ############################################################################# #
     # ///期货发起期货资金转银行错误回报
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnErrRtnFutureToBankByFuture(self, pReqTransfer, pRspInfo):
         self._write_log("OnErrRtnFutureToBankByFuture", pReqTransfer)
 
     # ############################################################################# #
     # ///期货发起冲正期货转银行请求，银行处理完毕后报盘发回的通知
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRtnRepealFromFutureToBankByFuture(self, pRspRepeal):
         self._write_log("OnRtnRepealFromFutureToBankByFuture", pRspRepeal)
 
     # ############################################################################# #
     # ///系统运行时期货端手工发起冲正期货转银行请求，银行处理完毕后报盘发回的通知
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRtnRepealFromFutureToBankByFutureManual(self, pRspRepeal):
         self._write_log("OnRtnRepealFromFutureToBankByFutureManual", pRspRepeal)
 
     # ############################################################################# #
     # ///系统运行时期货端手工发起冲正期货转银行错误回报
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnErrRtnRepealFutureToBankByFutureManual(self, pReqRepeal, pRspInfo):
         self._write_log("OnErrRtnRepealFutureToBankByFutureManual", pReqRepeal)
 
     # ############################################################################# #
     # ///银行发起期货资金转银行通知
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRtnFromFutureToBankByBank(self, pRspTransfer):
         self._write_log("OnRtnFromFutureToBankByBank", pRspTransfer)
 
     # ############################################################################# #
     # ///银行发起冲正期货转银行通知
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRtnRepealFromFutureToBankByBank(self, pRspRepeal):
         self._write_log("OnRtnRepealFromFutureToBankByBank", pRspRepeal)
 
@@ -1934,7 +1930,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQueryBankAccountMoneyByFuture(CThostFtdcReqQueryAccountField *pReqQueryAccount, int nRequestID)
     # ///期货发起查询银行余额请求
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def ReqQueryBankAccountMoneyByFuture(self, pReqQueryAccount):
         cdef int result = -1
         cdef int nRequestID
@@ -1952,19 +1948,19 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///期货发起查询银行余额应答
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRspQueryBankAccountMoneyByFuture(self, pReqQueryAccount, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQueryBankAccountMoneyByFuture", pReqQueryAccount)
 
     # ############################################################################# #
     # ///期货发起查询银行余额通知
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRtnQueryBankBalanceByFuture(self, pNotifyQueryAccount):
         self._write_log("OnRtnQueryBankBalanceByFuture", pNotifyQueryAccount)
 
     # ############################################################################# #
     # ///期货发起查询银行余额错误回报
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnErrRtnQueryBankBalanceByFuture(self, pReqQueryAccount, pRspInfo):
         self._write_log("OnErrRtnQueryBankBalanceByFuture", pReqQueryAccount)
 
@@ -1975,7 +1971,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryTransferSerial(CThostFtdcQryTransferSerialField *pQryTransferSerial, int nRequestID)
     # ///请求查询转帐流水
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def ReqQryTransferSerial(self, pQryTransferSerial):
         cdef int result = -1
         cdef int nRequestID
@@ -1993,7 +1989,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询转帐流水响应
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRspQryTransferSerial(self, pTransferSerial, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryTransferSerial", pTransferSerial)
 
@@ -2004,7 +2000,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryTransferBank(CThostFtdcQryTransferBankField *pQryTransferBank, int nRequestID)
     # ///请求查询转帐银行
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def ReqQryTransferBank(self, pQryTransferBank):
         cdef int result = -1
         cdef int nRequestID
@@ -2022,7 +2018,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询转帐银行响应
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRspQryTransferBank(self, pTransferBank, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryTransferBank", pTransferBank)
 
@@ -2033,7 +2029,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryContractBank(CThostFtdcQryContractBankField *pQryContractBank, int nRequestID)
     # ///请求查询签约银行
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def ReqQryContractBank(self, pQryContractBank):
         cdef int result = -1
         cdef int nRequestID
@@ -2051,7 +2047,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询签约银行响应
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRspQryContractBank(self, pContractBank, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryContractBank", pContractBank)
 
@@ -2062,7 +2058,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryAccountregister(CThostFtdcQryAccountregisterField *pQryAccountregister, int nRequestID)
     # ///请求查询银期签约关系
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def ReqQryAccountregister(self, pQryAccountregister):
         cdef int result = -1
         cdef int nRequestID
@@ -2080,7 +2076,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询银期签约关系响应
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRspQryAccountregister(self, pAccountregister, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryAccountregister", pAccountregister)
 
@@ -2090,7 +2086,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ############################################################################# #
     # ///银行发起银期开户通知
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRtnOpenAccountByBank(self, pOpenAccount):
         self._write_log("OnRtnOpenAccountByBank", pOpenAccount)
 
@@ -2100,7 +2096,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ############################################################################# #
     # ///银行发起银期销户通知
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRtnCancelAccountByBank(self, pCancelAccount):
         self._write_log("OnRtnCancelAccountByBank", pCancelAccount)
 
@@ -2110,7 +2106,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ############################################################################# #
     # ///银行发起变更银行账号通知
-    # 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
+    # 《CTP量化投资API手册(8)TraderApi银行相关》                 | http://7jia.com/70008.html
     def OnRtnChangeAccountByBank(self, pChangeAccount):
         self._write_log("OnRtnChangeAccountByBank", pChangeAccount)
 
@@ -2121,7 +2117,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryInstrumentMarginRate(CThostFtdcQryInstrumentMarginRateField *pQryInstrumentMarginRate, int nRequestID)
     # ///请求查询合约保证金率
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def ReqQryInstrumentMarginRate(self, pQryInstrumentMarginRate):
         cdef int result = -1
         cdef int nRequestID
@@ -2139,7 +2135,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询合约保证金率响应
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def OnRspQryInstrumentMarginRate(self, pInstrumentMarginRate, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryInstrumentMarginRate", pInstrumentMarginRate)
 
@@ -2150,7 +2146,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryInvestorProductGroupMargin(CThostFtdcQryInvestorProductGroupMarginField *pQryInvestorProductGroupMargin, int nRequestID)
     # ///请求查询投资者品种/跨品种保证金
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def ReqQryInvestorProductGroupMargin(self, pQryInvestorProductGroupMargin):
         cdef int result = -1
         cdef int nRequestID
@@ -2168,7 +2164,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询投资者品种/跨品种保证金响应
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def OnRspQryInvestorProductGroupMargin(self, pInvestorProductGroupMargin, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryInvestorProductGroupMargin", pInvestorProductGroupMargin)
 
@@ -2179,7 +2175,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryExchangeMarginRate(CThostFtdcQryExchangeMarginRateField *pQryExchangeMarginRate, int nRequestID)
     # ///请求查询交易所保证金率
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def ReqQryExchangeMarginRate(self, pQryExchangeMarginRate):
         cdef int result = -1
         cdef int nRequestID
@@ -2197,7 +2193,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询交易所保证金率响应
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def OnRspQryExchangeMarginRate(self, pExchangeMarginRate, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryExchangeMarginRate", pExchangeMarginRate)
 
@@ -2208,7 +2204,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryExchangeMarginRateAdjust(CThostFtdcQryExchangeMarginRateAdjustField *pQryExchangeMarginRateAdjust, int nRequestID)
     # ///请求查询交易所调整保证金率
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def ReqQryExchangeMarginRateAdjust(self, pQryExchangeMarginRateAdjust):
         cdef int result = -1
         cdef int nRequestID
@@ -2226,7 +2222,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询交易所调整保证金率响应
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def OnRspQryExchangeMarginRateAdjust(self, pExchangeMarginRate, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryExchangeMarginRateAdjust", pExchangeMarginRate)
 
@@ -2237,7 +2233,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryInstrumentCommissionRate(CThostFtdcQryInstrumentCommissionRateField *pQryInstrumentCommissionRate, int nRequestID)
     # ///请求查询合约手续费率
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def ReqQryInstrumentCommissionRate(self, pQryInstrumentCommissionRate):
         cdef int result = -1
         cdef int nRequestID
@@ -2255,7 +2251,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询合约手续费率响应
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def OnRspQryInstrumentCommissionRate(self, pInstrumentCommissionRate, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryInstrumentCommissionRate", pInstrumentCommissionRate)
 
@@ -2266,7 +2262,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryMMInstrumentCommissionRate(CThostFtdcQryMMInstrumentCommissionRateField *pQryMMInstrumentCommissionRate, int nRequestID)
     # ///请求查询做市商合约手续费率
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def ReqQryMMInstrumentCommissionRate(self, pQryMMInstrumentCommissionRate):
         cdef int result = -1
         cdef int nRequestID
@@ -2284,7 +2280,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询做市商合约手续费率响应
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def OnRspQryMMInstrumentCommissionRate(self, pMMInstrumentCommissionRate, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryMMInstrumentCommissionRate", pMMInstrumentCommissionRate)
 
@@ -2295,7 +2291,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryInstrumentOrderCommRate(CThostFtdcQryInstrumentOrderCommRateField *pQryInstrumentOrderCommRate, int nRequestID)
     # ///请求查询报单手续费
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def ReqQryInstrumentOrderCommRate(self, pQryInstrumentOrderCommRate):
         cdef int result = -1
         cdef int nRequestID
@@ -2313,7 +2309,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询报单手续费响应
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def OnRspQryInstrumentOrderCommRate(self, pInstrumentOrderCommRate, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryInstrumentOrderCommRate", pInstrumentOrderCommRate)
 
@@ -2324,7 +2320,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryOptionInstrCommRate(CThostFtdcQryOptionInstrCommRateField *pQryOptionInstrCommRate, int nRequestID)
     # ///请求查询期权合约手续费
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def ReqQryOptionInstrCommRate(self, pQryOptionInstrCommRate):
         cdef int result = -1
         cdef int nRequestID
@@ -2342,7 +2338,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询期权合约手续费响应
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def OnRspQryOptionInstrCommRate(self, pOptionInstrCommRate, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryOptionInstrCommRate", pOptionInstrCommRate)
 
@@ -2353,7 +2349,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryMMOptionInstrCommRate(CThostFtdcQryMMOptionInstrCommRateField *pQryMMOptionInstrCommRate, int nRequestID)
     # ///请求查询做市商期权合约手续费
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def ReqQryMMOptionInstrCommRate(self, pQryMMOptionInstrCommRate):
         cdef int result = -1
         cdef int nRequestID
@@ -2371,7 +2367,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询做市商期权合约手续费响应
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def OnRspQryMMOptionInstrCommRate(self, pMMOptionInstrCommRate, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryMMOptionInstrCommRate", pMMOptionInstrCommRate)
 
@@ -2382,7 +2378,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryOptionInstrTradeCost(CThostFtdcQryOptionInstrTradeCostField *pQryOptionInstrTradeCost, int nRequestID)
     # ///请求查询期权交易成本
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def ReqQryOptionInstrTradeCost(self, pQryOptionInstrTradeCost):
         cdef int result = -1
         cdef int nRequestID
@@ -2400,7 +2396,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询期权交易成本
-    # 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
+    # 《CTP量化投资API手册(6)TraderApi查保证金与手续费》       | http://7jia.com/70006.html
     def OnRspQryOptionInstrTradeCost(self, pOptionInstrTradeCost, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryOptionInstrTradeCost", pOptionInstrTradeCost)
 
@@ -2411,7 +2407,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryExchange(CThostFtdcQryExchangeField *pQryExchange, int nRequestID)
     # ///请求查询交易所
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def ReqQryExchange(self, pQryExchange):
         cdef int result = -1
         cdef int nRequestID
@@ -2429,7 +2425,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询交易所响应
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def OnRspQryExchange(self, pExchange, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryExchange", pExchange)
 
@@ -2440,7 +2436,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryInstrument(CThostFtdcQryInstrumentField *pQryInstrument, int nRequestID)
     # ///请求查询合约
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def ReqQryInstrument(self, pQryInstrument):
         cdef int result = -1
         cdef int nRequestID
@@ -2458,7 +2454,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询合约响应
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def OnRspQryInstrument(self, pInstrument, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryInstrument", pInstrument)
 
@@ -2469,7 +2465,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryTradingCode(CThostFtdcQryTradingCodeField *pQryTradingCode, int nRequestID)
     # ///请求查询交易编码
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def ReqQryTradingCode(self, pQryTradingCode):
         cdef int result = -1
         cdef int nRequestID
@@ -2487,7 +2483,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询交易编码响应
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def OnRspQryTradingCode(self, pTradingCode, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryTradingCode", pTradingCode)
 
@@ -2498,7 +2494,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryProduct(CThostFtdcQryProductField *pQryProduct, int nRequestID)
     # ///请求查询产品
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def ReqQryProduct(self, pQryProduct):
         cdef int result = -1
         cdef int nRequestID
@@ -2516,7 +2512,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询产品响应
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def OnRspQryProduct(self, pProduct, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryProduct", pProduct)
 
@@ -2527,7 +2523,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryProductExchRate(CThostFtdcQryProductExchRateField *pQryProductExchRate, int nRequestID)
     # ///请求查询产品报价汇率
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def ReqQryProductExchRate(self, pQryProductExchRate):
         cdef int result = -1
         cdef int nRequestID
@@ -2545,7 +2541,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询产品报价汇率
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def OnRspQryProductExchRate(self, pProductExchRate, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryProductExchRate", pProductExchRate)
 
@@ -2556,7 +2552,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryProductGroup(CThostFtdcQryProductGroupField *pQryProductGroup, int nRequestID)
     # ///请求查询产品组
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def ReqQryProductGroup(self, pQryProductGroup):
         cdef int result = -1
         cdef int nRequestID
@@ -2574,7 +2570,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询产品组响应
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def OnRspQryProductGroup(self, pProductGroup, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryProductGroup", pProductGroup)
 
@@ -2585,7 +2581,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryInvestUnit(CThostFtdcQryInvestUnitField *pQryInvestUnit, int nRequestID)
     # ///请求查询投资单元
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def ReqQryInvestUnit(self, pQryInvestUnit):
         cdef int result = -1
         cdef int nRequestID
@@ -2603,7 +2599,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询投资单元响应
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def OnRspQryInvestUnit(self, pInvestUnit, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryInvestUnit", pInvestUnit)
 
@@ -2614,7 +2610,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryCombInstrumentGuard(CThostFtdcQryCombInstrumentGuardField *pQryCombInstrumentGuard, int nRequestID)
     # ///请求查询组合合约安全系数
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def ReqQryCombInstrumentGuard(self, pQryCombInstrumentGuard):
         cdef int result = -1
         cdef int nRequestID
@@ -2632,7 +2628,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询组合合约安全系数响应
-    # 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
+    # 《CTP量化投资API手册(9)TraderApi查合约》             | http://7jia.com/70009.html
     def OnRspQryCombInstrumentGuard(self, pCombInstrumentGuard, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryCombInstrumentGuard", pCombInstrumentGuard)
 
@@ -2640,7 +2636,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///交易所公告通知
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def OnRtnBulletin(self, pBulletin):
         self._write_log("OnRtnBulletin", pBulletin)
 
@@ -2651,7 +2647,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryDepthMarketData(CThostFtdcQryDepthMarketDataField *pQryDepthMarketData, int nRequestID)
     # ///请求查询行情
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def ReqQryDepthMarketData(self, pQryDepthMarketData):
         cdef int result = -1
         cdef int nRequestID
@@ -2669,7 +2665,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询行情响应
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def OnRspQryDepthMarketData(self, pDepthMarketData, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryDepthMarketData", pDepthMarketData)
 
@@ -2680,7 +2676,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQueryMaxOrderVolume(CThostFtdcQueryMaxOrderVolumeField *pQueryMaxOrderVolume, int nRequestID)
     # ///查询最大报单数量请求
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def ReqQueryMaxOrderVolume(self, pQueryMaxOrderVolume):
         cdef int result = -1
         cdef int nRequestID
@@ -2698,7 +2694,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///查询最大报单数量响应
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def OnRspQueryMaxOrderVolume(self, pQueryMaxOrderVolume, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQueryMaxOrderVolume", pQueryMaxOrderVolume)
 
@@ -2709,7 +2705,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryEWarrantOffset(CThostFtdcQryEWarrantOffsetField *pQryEWarrantOffset, int nRequestID)
     # ///请求查询仓单折抵信息
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def ReqQryEWarrantOffset(self, pQryEWarrantOffset):
         cdef int result = -1
         cdef int nRequestID
@@ -2727,7 +2723,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询仓单折抵信息响应
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def OnRspQryEWarrantOffset(self, pEWarrantOffset, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryEWarrantOffset", pEWarrantOffset)
 
@@ -2738,7 +2734,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryExchangeRate(CThostFtdcQryExchangeRateField *pQryExchangeRate, int nRequestID)
     # ///请求查询汇率
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def ReqQryExchangeRate(self, pQryExchangeRate):
         cdef int result = -1
         cdef int nRequestID
@@ -2756,7 +2752,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询汇率响应
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def OnRspQryExchangeRate(self, pExchangeRate, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryExchangeRate", pExchangeRate)
 
@@ -2767,7 +2763,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryNotice(CThostFtdcQryNoticeField *pQryNotice, int nRequestID)
     # ///请求查询客户通知
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def ReqQryNotice(self, pQryNotice):
         cdef int result = -1
         cdef int nRequestID
@@ -2785,7 +2781,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询客户通知响应
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def OnRspQryNotice(self, pNotice, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryNotice", pNotice)
 
@@ -2796,7 +2792,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryTradingNotice(CThostFtdcQryTradingNoticeField *pQryTradingNotice, int nRequestID)
     # ///请求查询交易通知
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def ReqQryTradingNotice(self, pQryTradingNotice):
         cdef int result = -1
         cdef int nRequestID
@@ -2814,13 +2810,13 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询交易通知响应
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def OnRspQryTradingNotice(self, pTradingNotice, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryTradingNotice", pTradingNotice)
 
     # ############################################################################# #
     # ///交易通知
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def OnRtnTradingNotice(self, pTradingNoticeInfo):
         self._write_log("OnRtnTradingNotice", pTradingNoticeInfo)
 
@@ -2831,7 +2827,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryCFMMCTradingAccountKey(CThostFtdcQryCFMMCTradingAccountKeyField *pQryCFMMCTradingAccountKey, int nRequestID)
     # ///请求查询保证金监管系统经纪公司资金账户密钥
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def ReqQryCFMMCTradingAccountKey(self, pQryCFMMCTradingAccountKey):
         cdef int result = -1
         cdef int nRequestID
@@ -2849,7 +2845,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///查询保证金监管系统经纪公司资金账户密钥响应
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def OnRspQryCFMMCTradingAccountKey(self, pCFMMCTradingAccountKey, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryCFMMCTradingAccountKey", pCFMMCTradingAccountKey)
 
@@ -2860,7 +2856,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryBrokerTradingParams(CThostFtdcQryBrokerTradingParamsField *pQryBrokerTradingParams, int nRequestID)
     # ///请求查询经纪公司交易参数
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def ReqQryBrokerTradingParams(self, pQryBrokerTradingParams):
         cdef int result = -1
         cdef int nRequestID
@@ -2878,7 +2874,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询经纪公司交易参数响应
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def OnRspQryBrokerTradingParams(self, pBrokerTradingParams, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryBrokerTradingParams", pBrokerTradingParams)
 
@@ -2889,7 +2885,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQryBrokerTradingAlgos(CThostFtdcQryBrokerTradingAlgosField *pQryBrokerTradingAlgos, int nRequestID)
     # ///请求查询经纪公司交易算法
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def ReqQryBrokerTradingAlgos(self, pQryBrokerTradingAlgos):
         cdef int result = -1
         cdef int nRequestID
@@ -2907,7 +2903,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询经纪公司交易算法响应
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def OnRspQryBrokerTradingAlgos(self, pBrokerTradingAlgos, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQryBrokerTradingAlgos", pBrokerTradingAlgos)
 
@@ -2918,7 +2914,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQrySecAgentTradeInfo(CThostFtdcQrySecAgentTradeInfoField *pQrySecAgentTradeInfo, int nRequestID)
     # ///请求查询二级代理商信息
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def ReqQrySecAgentTradeInfo(self, pQrySecAgentTradeInfo):
         cdef int result = -1
         cdef int nRequestID
@@ -2936,7 +2932,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询二级代理商信息响应
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def OnRspQrySecAgentTradeInfo(self, pSecAgentTradeInfo, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQrySecAgentTradeInfo", pSecAgentTradeInfo)
 
@@ -2947,7 +2943,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQrySecAgentCheckMode(CThostFtdcQrySecAgentCheckModeField *pQrySecAgentCheckMode, int nRequestID)
     # ///请求查询二级代理商资金校验模式
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def ReqQrySecAgentCheckMode(self, pQrySecAgentCheckMode):
         cdef int result = -1
         cdef int nRequestID
@@ -2965,7 +2961,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询二级代理商资金校验模式响应
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def OnRspQrySecAgentCheckMode(self, pSecAgentCheckMode, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQrySecAgentCheckMode", pSecAgentCheckMode)
 
@@ -2976,7 +2972,7 @@ cdef class TraderApi:
     # ############################################################################# #
     # ReqQrySecAgentACIDMap(CThostFtdcQrySecAgentACIDMapField *pQrySecAgentACIDMap, int nRequestID)
     # ///请求查询二级代理操作员银期权限
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def ReqQrySecAgentACIDMap(self, pQrySecAgentACIDMap):
         cdef int result = -1
         cdef int nRequestID
@@ -2994,7 +2990,7 @@ cdef class TraderApi:
 
     # ############################################################################# #
     # ///请求查询二级代理操作员银期权限响应
-    # 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
+    # 《CTP量化投资API手册(10)TraderApi查其他》                 | http://7jia.com/70010.html
     def OnRspQrySecAgentACIDMap(self, pSecAgentACIDMap, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspQrySecAgentACIDMap", pSecAgentACIDMap)
 

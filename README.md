@@ -29,9 +29,9 @@ AlgoPlus从以下三个不同的维度实现低延时：
 * 同时支持接入多路行情源，降低轮询等待时间；
 * 利用CTP的线程特性，以接口回调直接驱动策略运行，无需主事件引擎，真正实现去中心化。
 
-我们对AlgoPlus进行过严格的延时测试：上海电信300M宽带，Simnow账户以对价方式进行无逻辑报单（收到成交回报之后立即再次报单），平均每秒可以完成50笔成交。也就是说，AlgoPlus从发出委托到收到成交回报（这个过程是从本地发出，经过互联网，到达期货公司交易前置，再到交易所，完成撮合成交之后，发回期货公司交易前置，再经过互联网，最终回到客户本地），平均需要20毫秒（1s=1000ms）。
+我们对AlgoPlus进行过严格的延时测试：上海电信300M宽带，Simnow账户以对价方式进行无逻辑报单（收到成交回报之后立即再次报单），平均每秒可以完成105笔成交。也就是说，AlgoPlus从发出委托到收到成交回报（这个过程是从本地发出，经过互联网，到达期货公司交易前置，再到交易所，完成撮合成交之后，发回期货公司交易前置，再经过互联网，最终回到客户本地），平均需要9.5毫秒（1s=1000ms）。
 
-![](./img/AlgoPlus延时测试.png)
+![](./img/AlgoPlus秒内交易测试.jpg)
 
 为了提高AlgoPlus的易用性，一方面我们力求所有的设计都忠实于CTP官方功能，只要理解CTP官方API的工作流程，就可能直接上手使用，无需学习额外的知识；另一方面，我们会制作系统化的教程，将大家在使用过程中踩坑的几率降到最低。最后，我们开通了www.ctp.plus量化投资研究社区，方便大家学习、分享、交流。
 
@@ -42,63 +42,51 @@ AlgoPlus从以下三个不同的维度实现低延时：
 
 对量化投资技术的推广是我们最终的追求，所以教程不会只局限在AlgoPlus框架内。我们希望其他商业/开源平台的用户也能够通过我们的工作获得帮助。我们会为此倍感荣幸！
 
-#### 《CTP官方接口手册》
+#### 《CTP量化投资API手册》
 本教程对CTP方法及相关参数进行了汇总归类，方便大家理解CTP的工作逻辑，也方便在需要时查阅。
 
-1. CTP接口工作流程概述
-    * <http://ctp.plus/?/article/1>
-2. MdApi接口说明
-    * <http://ctp.plus/?/article/2>
-3. TraderApi环境初始化与账户登录相关接口说明 
-    * <http://ctp.plus/?/article/3>
-4. TraderApi基础交易接口说明
-    * <http://ctp.plus/?/article/4>
-5. TraderApi扩展交易接口说明
-    * <http://ctp.plus/?/article/5>
-6. TraderApi资金与持仓查询接口说明
-    * <http://ctp.plus/?/article/6>
-7. TraderApi保证金与手续费查询接口说明
-    * <http://ctp.plus/?/article/7>
-8. TraderApi期权交易接口说明
-    * <http://ctp.plus/?/article/8>
-9. TraderApi银行相关接口说明
-    * <http://ctp.plus/?/article/9>
-10. TraderApi合约信息查询接口说明
-    * <http://ctp.plus/?/article/10>
-11. TraderApi其他查询接口说明
-    * <http://ctp.plus/?/article/11>
-12. 错误信息
-    * <http://ctp.plus/?/article/12>
+1. 《CTP量化投资API手册(0)概述》 <http://7jia.com/70000.html>
+2. 《CTP量化投资API手册(1)MdApi》 <http://7jia.com/70001.html>
+3. 《CTP量化投资API手册(2)TraderApi初始化与登录》 <http://7jia.com/70002.html>
+4. 《CTP量化投资API手册(3)TraderApi基础交易》 <http://7jia.com/70003.html>
+5. 《CTP量化投资API手册(4)TraderApi扩展交易》 <http://7jia.com/70004.html>
+6. 《CTP量化投资API手册(5)TraderApi查资金与持仓》 <http://7jia.com/70005.html>
+7. 《CTP量化投资API手册(6)TraderApi查保证金与手续费》 <http://7jia.com/70006.html>
+8. 《CTP量化投资API手册(7)TraderApi期权交易》 <http://7jia.com/70007.html>
+9. 《CTP量化投资API手册(8)TraderApi银行相关》 <http://7jia.com/70008.html>
+10. 《CTP量化投资API手册(9)TraderApi查合约》 <http://7jia.com/70009.html>
+11. 《CTP量化投资API手册(10)TraderApi查其他》 <http://7jia.com/70010.html>
+12. 《CTP量化投资API手册(11)错误信息》 <http://7jia.com/70011.html>
 
-#### 《AlgoPlus进阶手册》
+#### 《AlgoPlus入门手册》
 本教程主要教大家如果使用AlgoPlus实现量化交易。
 
 1. 准备工作
-    * 安装Anaconda
-    * 安装AlgoPlus
-    * 安装PyCharm
-    * 配置account_info
+    * 安装Anaconda（已完成）
+    * 安装AlgoPlus（已完成）
+    * 安装PyCharm（已完成）
+    * 配置account_info（已完成）
     * Python基本语法
     * 线程与进程
-2. 创建MdApi
-3. 合成K线
+2. 创建MdApi（已完成）
+3. 合成K线（已完成）
 4. 计算指标
-5. 创建TraderApi
-6. 报单（买卖开平）及回报
-7. 撤单及回报
-8. 客户端认证
+5. 创建TraderApi（已完成）
+6. 报单（买卖开平）及回报（已完成）
+7. 撤单及回报（已完成）
+8. 客户端认证（已完成）
 9. 多进程间共享数据
-    * Queue
+    * Queue（已完成）
     * MMAP
 10. 序列化
-    * CSV
+    * CSV（已完成）
     * MySQL
     * hdf5
     * MMAP
 11. 性能分析
     * 期货公司行情速度测评
     * 行情分发性能测评
-    * 交易延迟测评
+    * 交易延迟测评（<http://7jia.com/71006.html>）
     * 序列化性能测评
 
 ### 开源地址

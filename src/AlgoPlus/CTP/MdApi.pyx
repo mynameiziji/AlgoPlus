@@ -23,18 +23,18 @@ from AlgoPlus.utils.check_service import  check_service
 # ############################################################################# #
 # ############################################################################# #
 # 请参阅CTP量化开发社区(www.ctp.plus)发布的《CTP官方接口文档》：
-# 《CTP接口工作流程概述》                       | http://ctp.plus/?/article/1
-# 《MdApi接口说明》                             | http://ctp.plus/?/article/2
-# 《TraderApi环境初始化与账户登录相关接口说明》 | http://ctp.plus/?/article/3
-# 《TraderApi基础交易接口说明》                 | http://ctp.plus/?/article/4
-# 《TraderApi扩展交易接口说明》                 | http://ctp.plus/?/article/5
-# 《TraderApi资金与持仓查询接口说明》           | http://ctp.plus/?/article/6
-# 《TraderApi保证金与手续费查询接口说明》       | http://ctp.plus/?/article/7
-# 《TraderApi期权交易接口说明》                 | http://ctp.plus/?/article/8
-# 《TraderApi银行相关接口说明》                 | http://ctp.plus/?/article/9
-# 《TraderApi合约信息查询接口说明》             | http://ctp.plus/?/article/10
-# 《TraderApi其他查询接口说明》                 | http://ctp.plus/?/article/11
-# 《错误信息说明》                              | http://ctp.plus/?/article/12
+# 《CTP量化投资API手册(0)概述》                      | http://7jia.com/70000.html
+# 《CTP量化投资API手册(1)MdApi》                     | http://7jia.com/70001.html
+# 《CTP量化投资API手册(2)TraderApi初始化与登录》     | http://7jia.com/70002.html
+# 《CTP量化投资API手册(3)TraderApi基础交易》         | http://7jia.com/70003.html
+# 《CTP量化投资API手册(4)TraderApi扩展交易》         | http://7jia.com/70004.html
+# 《CTP量化投资API手册(5)TraderApi查资金与持仓》     | http://7jia.com/70005.html
+# 《CTP量化投资API手册(6)TraderApi查保证金与手续费》 | http://7jia.com/70006.html
+# 《CTP量化投资API手册(7)TraderApi期权交易》         | http://7jia.com/70007.html
+# 《CTP量化投资API手册(8)TraderApi银行相关》         | http://7jia.com/70008.html
+# 《CTP量化投资API手册(9)TraderApi查合约》           | http://7jia.com/70009.html
+# 《CTP量化投资API手册(10)TraderApi查其他》          | http://7jia.com/70010.html
+# 《CTP量化投资API手册(11)错误信息》                 | http://7jia.com/70011.html
 # ############################################################################# #
 # ############################################################################# #
 # ############################################################################# #
@@ -126,7 +126,7 @@ cdef class MdApi():
 
     # ############################################################################# #
     # ///获取API的版本信息
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     @staticmethod
     def GetApiVersion(self):
         cdef const_char *result = ''
@@ -139,7 +139,7 @@ cdef class MdApi():
 
     # ############################################################################# #
     # ///获取当前交易日
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def GetTradingDay(self):
         cdef const_char *result = ''
         try:
@@ -165,7 +165,7 @@ cdef class MdApi():
 
     # ############################################################################# #
     # ///删除接口对象本身
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def Release(self):
         try:
             if self._api is not NULL:
@@ -182,7 +182,7 @@ cdef class MdApi():
     # ############################################################################# #
     # ############################################################################# #
     # ///等待接口线程结束运行
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def Join(self):
         cdef int result = -1
         try:
@@ -199,7 +199,7 @@ cdef class MdApi():
     # ############################################################################# #
     # ############################################################################# #
     # ///创建MdApi
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def Init_Base(self):
         cdef int bInit = -1
         try:
@@ -220,7 +220,7 @@ cdef class MdApi():
     # ///注册回调接口
     # ///void Init()
     # ///初始化
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def Init_Net(self):
         cdef int bInit=-1
         try:
@@ -242,7 +242,7 @@ cdef class MdApi():
     # ############################################################################# #
     # ############################################################################# #
     # ///注册前置机网络地址
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def RegisterFront(self, char *pszFrontAddress):
         cdef int result = -1
         try:
@@ -256,7 +256,7 @@ cdef class MdApi():
 
     # ############################################################################# #
     # ///注册名字服务器网络地址
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def RegisterNameServer(self, char *pszNsAddress):
         cdef int result = -1
         try:
@@ -269,7 +269,7 @@ cdef class MdApi():
             return result
 
     # ///注册名字服务器用户信息
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def RegisterFensUserInfo(self, pFensUserInfo):
         cdef int result = -1
         cdef size_t address = 0
@@ -289,19 +289,19 @@ cdef class MdApi():
     # ############################################################################# #
     # ############################################################################# #
     # ///当客户端与交易后台建立起通信连接时（还未登录前），该方法被调用。
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def OnFrontConnected(self):
         if self.status == -2:
           self._write_log("OnFrontConnected", "重连成功！")
 
     # ///当客户端与交易后台通信连接断开时，该方法被调用。当发生这个情况后，API会自动重新连接，客户端可不做处理。
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def OnFrontDisconnected(self, nReason):
         self.status = -2
         self._write_log("OnFrontDisconnected", nReason)
 
     # ///心跳超时警告。当长时间未收到报文时，该方法被调用。
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def OnHeartBeatWarning(self, nTimeLapse):
         self.status = -2
         self._write_log("OnHeartBeatWarning", nTimeLapse)
@@ -312,7 +312,7 @@ cdef class MdApi():
     # ############################################################################# #
     # ############################################################################# #
     # ///用户登录请求
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def ReqUserLogin(self, pReqUserLoginField):
         cdef int result = -1
         cdef int nRequestID
@@ -329,7 +329,7 @@ cdef class MdApi():
             return result
 
     # ///登录请求响应
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def OnRspUserLogin(self, pRspUserLogin, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspUserLogin", pRspUserLogin)
 
@@ -339,7 +339,7 @@ cdef class MdApi():
     # ############################################################################# #
     # ############################################################################# #
     # ///登出请求
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def ReqUserLogout(self, size_t pUserLogout):
         cdef int result = -1
         cdef int nRequestID
@@ -356,7 +356,7 @@ cdef class MdApi():
             return result
 
     # ///登出请求响应
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def OnRspUserLogout(self, pUserLogout, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspUserLogout", pUserLogout)
 
@@ -366,7 +366,7 @@ cdef class MdApi():
     # ############################################################################# #
     # ############################################################################# #
     # ///订阅行情。
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def SubscribeMarketData(self, pInstrumentID):
         cdef int result = -1
         cdef Py_ssize_t count
@@ -389,13 +389,13 @@ cdef class MdApi():
             return result
 
     # ///订阅行情应答
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def OnRspSubMarketData(self, pSpecificInstrument, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspSubMarketData", pSpecificInstrument)
 
     # ############################################################################# #
     # ///退订行情。
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def UnSubscribeMarketData(self, pInstrumentID):
         cdef int result = -1
         cdef Py_ssize_t count
@@ -417,12 +417,12 @@ cdef class MdApi():
             return result
 
     # ///取消订阅行情应答
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def OnRspUnSubMarketData(self, pSpecificInstrument, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspUnSubMarketData", pSpecificInstrument)
 
     # ///深度行情通知
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def OnRtnDepthMarketData(self, pDepthMarketData):
         pass
 
@@ -431,7 +431,7 @@ cdef class MdApi():
     # ############################################################################# #
     # ############################################################################# #
     # ///订阅询价。
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def SubscribeForQuoteRsp(self, pInstrumentID):
         cdef int result = -1
         cdef Py_ssize_t count
@@ -453,13 +453,13 @@ cdef class MdApi():
             return result
 
     # ///订阅询价应答
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def OnRspSubForQuoteRsp(self, pSpecificInstrument, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspSubForQuoteRsp", pSpecificInstrument)
 
     # ############################################################################# #
     # ///退订询价。
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def UnSubscribeForQuoteRsp(self, pInstrumentID):
         cdef int result = -1
         cdef Py_ssize_t count
@@ -481,12 +481,12 @@ cdef class MdApi():
             return result
 
     # ///取消订阅询价应答
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def OnRspUnSubForQuoteRsp(self, pSpecificInstrument, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspUnSubForQuoteRsp", pSpecificInstrument)
 
     # ///询价通知
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def OnRtnForQuoteRsp(self, pForQuoteRsp):
         pass
 
@@ -496,7 +496,7 @@ cdef class MdApi():
     # ############################################################################# #
     # ############################################################################# #
     # ///错误应答
-    # 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+    # 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
     def OnRspError(self, pRspInfo, nRequestID, bIsLast):
         self._write_log("OnRspError", pRspInfo)
 
@@ -506,7 +506,7 @@ cdef class MdApi():
 # ############################################################################# #
 # ############################################################################# #
 # ///当客户端与交易后台建立起通信连接时（还未登录前），该方法被调用。
-# 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+# 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
 cdef extern int   MdSpi_OnFrontConnected(self) except -1:
     cdef int retVal = -1
     try:
@@ -524,7 +524,7 @@ cdef extern int   MdSpi_OnFrontConnected(self) except -1:
 
 # ############################################################################# #
 # ///当客户端与交易后台通信连接断开时，该方法被调用。当发生这个情况后，API会自动重新连接，客户端可不做处理。
-# 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+# 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
 cdef extern int   MdSpi_OnFrontDisconnected(self, int nReason) except -1:
     try:
         self.OnFrontDisconnected(nReason)
@@ -535,7 +535,7 @@ cdef extern int   MdSpi_OnFrontDisconnected(self, int nReason) except -1:
 
 # ############################################################################# #
 # ///心跳超时警告。当长时间未收到报文时，该方法被调用。
-# 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+# 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
 cdef extern int   MdSpi_OnHeartBeatWarning(self, int nTimeLapse) except -1:
 
     try:
@@ -551,7 +551,7 @@ cdef extern int   MdSpi_OnHeartBeatWarning(self, int nTimeLapse) except -1:
 # ############################################################################# #
 # ############################################################################# #
 # ///登录请求响应
-# 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+# 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
 cdef extern int   MdSpi_OnRspUserLogin(self, CThostFtdcRspUserLoginField *pRspUserLogin
                                            , CThostFtdcRspInfoField *pRspInfo
                                            , int nRequestID
@@ -587,7 +587,7 @@ cdef extern int   MdSpi_OnRspUserLogin(self, CThostFtdcRspUserLoginField *pRspUs
 
 # ############################################################################# #
 # ///登出请求响应
-# 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+# 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
 cdef extern int   MdSpi_OnRspUserLogout(self, CThostFtdcUserLogoutField *pUserLogout
                                             , CThostFtdcRspInfoField *pRspInfo
                                             , int nRequestID
@@ -610,7 +610,7 @@ cdef extern int   MdSpi_OnRspUserLogout(self, CThostFtdcUserLogoutField *pUserLo
 # ############################################################################# #
 # ############################################################################# #
 # ///订阅行情应答
-# 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+# 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
 cdef extern int   MdSpi_OnRspSubMarketData(self, CThostFtdcSpecificInstrumentField *pSpecificInstrument
                                                , CThostFtdcRspInfoField *pRspInfo
                                                , int nRequestID
@@ -629,7 +629,7 @@ cdef extern int   MdSpi_OnRspSubMarketData(self, CThostFtdcSpecificInstrumentFie
 
 # ############################################################################# #
 # ///取消订阅行情应答
-# 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+# 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
 cdef extern int   MdSpi_OnRspUnSubMarketData(self, CThostFtdcSpecificInstrumentField *pSpecificInstrument
                                                  , CThostFtdcRspInfoField *pRspInfo
                                                  , int nRequestID
@@ -648,7 +648,7 @@ cdef extern int   MdSpi_OnRspUnSubMarketData(self, CThostFtdcSpecificInstrumentF
 
 # ############################################################################# #
 # ///深度行情通知
-# 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+# 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
 cdef extern int   MdSpi_OnRtnDepthMarketData(self, CThostFtdcDepthMarketDataField *pDepthMarketData) except -1:
 
     try:
@@ -665,7 +665,7 @@ cdef extern int   MdSpi_OnRtnDepthMarketData(self, CThostFtdcDepthMarketDataFiel
 # ############################################################################# #
 # ############################################################################# #
 # ///订阅询价应答
-# 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+# 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
 cdef extern int   MdSpi_OnRspSubForQuoteRsp(self, CThostFtdcSpecificInstrumentField *pSpecificInstrument
                                                 , CThostFtdcRspInfoField *pRspInfo
                                                 , int nRequestID
@@ -684,7 +684,7 @@ cdef extern int   MdSpi_OnRspSubForQuoteRsp(self, CThostFtdcSpecificInstrumentFi
 
 # ############################################################################# #
 # ///取消订阅询价应答
-# 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+# 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
 cdef extern int   MdSpi_OnRspUnSubForQuoteRsp(self, CThostFtdcSpecificInstrumentField *pSpecificInstrument
                                                   , CThostFtdcRspInfoField *pRspInfo
                                                   , int nRequestID
@@ -703,7 +703,7 @@ cdef extern int   MdSpi_OnRspUnSubForQuoteRsp(self, CThostFtdcSpecificInstrument
 
 # ############################################################################# #
 # ///询价通知
-# 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+# 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
 cdef extern int   MdSpi_OnRtnForQuoteRsp(self, CThostFtdcForQuoteRspField *pForQuoteRsp) except -1:
 
     try:
@@ -720,7 +720,7 @@ cdef extern int   MdSpi_OnRtnForQuoteRsp(self, CThostFtdcForQuoteRspField *pForQ
 # ############################################################################# #
 # ############################################################################# #
 # ///错误应答
-# 《MdApi接口说明》                             | http://ctp.plus/?/article/2
+# 《CTP量化投资API手册(1)MdApi》                             | http://7jia.com/70001.html
 cdef extern int   MdSpi_OnRspError(self, CThostFtdcRspInfoField *pRspInfo
                                        , int nRequestID
                                        , cbool bIsLast) except -1:
