@@ -2715,7 +2715,7 @@ cdef class TraderApi:
             if self._api is not NULL:
                 address = addressof(pQryEWarrantOffset)
                 with nogil:
-                  result = self._api.ReqQryEWarrantOffset(<CThostFtdcQryEWarrantOffsetField *> address, nRequestID)
+                    result = self._api.ReqQryEWarrantOffset(<CThostFtdcQryEWarrantOffsetField *> address, nRequestID)
         except Exception as err_msg:
             self._write_log("ReqQryEWarrantOffset", err_msg)
         finally:
