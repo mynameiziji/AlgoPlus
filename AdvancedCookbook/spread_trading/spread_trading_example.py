@@ -66,7 +66,10 @@ class MySpreadTrading(SpreadTradingBase):
         volume_traded = local_order_info.VolumeTotal - rtn_order_field.VolumeTotal  # 腿一成交数量
         if volume_traded > 0:
             local_order_info.VolumeTotal = rtn_order_field.VolumeTotal  # 腿一剩余数量
-            self.position_a += volume_traded  # 腿一总持仓
+            if rtn_order_field.CombOffsetFlag == b'0':
+                self.position_a += volume_traded  # 腿一总持仓
+            else:
+                self.position_a -= volume_traded  # 腿一总持仓
             self.order_ref += 1
             if rtn_order_field.Direction == b'0':
                 order_price = self.get_order_price_l2(b'1')  # 腿二报单价格
@@ -85,9 +88,14 @@ class MySpreadTrading(SpreadTradingBase):
         volume_traded = local_order_info.VolumeTotal - rtn_order_field.VolumeTotal  # 腿二成交数量
         if volume_traded > 0:
             local_order_info.VolumeTotal = rtn_order_field.VolumeTotal  # 腿二成交数量
-            self.position_b += volume_traded  # 腿二总持仓
+            if rtn_order_field.CombOffsetFlag == b'0':
+                self.position_b += volume_traded  # 腿二总持仓
+            else:
+                self.position_b -= volume_traded  # 腿二总持仓
             if rtn_order_field.VolumeTotal == 0:
                 self.sig_stage = 0
+                if self.position_b == 0:
+                    self.position_status = 0
                 self.local_order_dict.clear()
                 self._write_log(f"腿一与腿二配对完成！目前持仓情况，腿一：{self.position_a}，腿二：{self.position_b}")
 
@@ -217,7 +225,6 @@ class MySpreadTrading(SpreadTradingBase):
 
 
 if __name__ == "__main__":
-
     from account_info import my_future_account_info_dict
 
     future_account = my_future_account_info_dict['SimNow24']
