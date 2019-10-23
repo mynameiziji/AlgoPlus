@@ -10,6 +10,13 @@ class BaseField(Structure):
         else:
             return bytes(str(value), encoding="utf-8")
 
+    def to_dict_raw(self):
+        results = {}
+        for key, _ in self._fields_:
+            _value = getattr(self, key)
+            results[key] = _value
+        return results
+
     def to_dict(self):
         results = {}
         for key, _ in self._fields_:
