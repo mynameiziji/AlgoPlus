@@ -56,97 +56,97 @@ class MySpreadTrading(SpreadTradingBase):
         self._write_log(f"策略参数初始化完成！=>{self.parameter_field}")
 
     # ############################################################################# #
-    def on_leg1_traded(self, rtn_order_field):
+    def on_leg1_traded(self, rtn_order):
         """
         腿一（不活跃合约）成交时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderFireq_order_inserteld的实例。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderFireq_order_inserteld的实例。
         :return:
         """
-        local_order_info = self.local_order_dict[rtn_order_field.OrderRef]  # 本地订单信息
-        volume_traded = local_order_info.VolumeTotal - rtn_order_field.VolumeTotal  # 腿一成交数量
+        local_order_info = self.local_order_dict[rtn_order["OrderRef"]]  # 本地订单信息
+        volume_traded = local_order_info.VolumeTotal - rtn_order["VolumeTotal"]  # 腿一成交数量
         if volume_traded > 0:
-            local_order_info.VolumeTotal = rtn_order_field.VolumeTotal  # 腿一剩余数量
-            if rtn_order_field.CombOffsetFlag == b'0':
+            local_order_info.VolumeTotal = rtn_order["VolumeTotal"]  # 腿一剩余数量
+            if rtn_order["CombOffsetFlag"] == b'0':
                 self.position_a += volume_traded  # 腿一总持仓
             else:
                 self.position_a -= volume_traded  # 腿一总持仓
             self.order_ref += 1
-            if rtn_order_field.Direction == b'0':
+            if rtn_order["Direction"] == b'0':
                 order_price = self.get_order_price_l2(b'1')  # 腿二报单价格
                 self.sell_open(self.parameter_field.BExchangeID, self.parameter_field.BInstrumentID, order_price, volume_traded, self.order_ref)
             else:
                 order_price = self.get_order_price_l2(b'0')  # 腿二报单价格
                 self.buy_open(self.parameter_field.BExchangeID, self.parameter_field.BInstrumentID, order_price, volume_traded, self.order_ref)
 
-    def on_leg2_traded(self, rtn_order_field):
+    def on_leg2_traded(self, rtn_order):
         """
         腿二（活跃合约）成交时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderField的实例。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField的实例。
         :return:
         """
-        local_order_info = self.local_order_dict[rtn_order_field.OrderRef]  # 本地订单信息
-        volume_traded = local_order_info.VolumeTotal - rtn_order_field.VolumeTotal  # 腿二成交数量
+        local_order_info = self.local_order_dict[rtn_order["OrderRef"]]  # 本地订单信息
+        volume_traded = local_order_info.VolumeTotal - rtn_order["VolumeTotal"]  # 腿二成交数量
         if volume_traded > 0:
-            local_order_info.VolumeTotal = rtn_order_field.VolumeTotal  # 腿二成交数量
-            if rtn_order_field.CombOffsetFlag == b'0':
+            local_order_info.VolumeTotal = rtn_order["VolumeTotal"]  # 腿二成交数量
+            if rtn_order["CombOffsetFlag"] == b'0':
                 self.position_b += volume_traded  # 腿二总持仓
             else:
                 self.position_b -= volume_traded  # 腿二总持仓
-            if rtn_order_field.VolumeTotal == 0:
+            if rtn_order["VolumeTotal"] == 0:
                 self.sig_stage = 0
                 if self.position_b == 0:
                     self.position_status = 0
                 self.local_order_dict.clear()
                 self._write_log(f"腿一与腿二配对完成！目前持仓情况，腿一：{self.position_a}，腿二：{self.position_b}")
 
-    def on_leg1_action(self, rtn_order_field):
+    def on_leg1_action(self, rtn_order):
         """
         腿一（不活跃合约）撤单成功时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderField的实例。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField的实例。
         :return:
         """
         self.sig_stage = 0
         if self.position_a == 0:
             self.position_status = 0
 
-    def on_leg2_action(self, rtn_order_field):
+    def on_leg2_action(self, rtn_order):
         """
         腿二（活跃合约）撤单成功时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderField的实例。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField的实例。
         :return:
         """
         self.order_ref += 1
-        order_price = self.get_order_price_l2(rtn_order_field.Direction)  # 腿二报单价格
-        self.req_order_insert(rtn_order_field.ExchangeID, rtn_order_field.InstrumentID, order_price, rtn_order_field.VolumeTotal, self.order_ref, rtn_order_field.Direction, rtn_order_field.CombOffsetFlag)
+        order_price = self.get_order_price_l2(rtn_order["Direction"])  # 腿二报单价格
+        self.req_order_insert(rtn_order["ExchangeID"], rtn_order["InstrumentID"], order_price, rtn_order["VolumeTotal"], self.order_ref, rtn_order["Direction"], rtn_order["CombOffsetFlag"])
 
-    def on_leg1_insert_fail(self, rtn_order_field):
+    def on_leg1_insert_fail(self, rtn_order):
         """
         腿一（不活跃合约）订单失败时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderField的实例。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField的实例。
         :return:
         """
         pass
 
-    def on_leg2_insert_fail(self, rtn_order_field):
+    def on_leg2_insert_fail(self, rtn_order):
         """
         腿一（不活跃合约）报单失败时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderField的实例。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField的实例。
         :return:
         """
         pass
 
-    def on_leg1_action_fail(self, rtn_order_field):
+    def on_leg1_action_fail(self, rtn_order):
         """
         腿一（不活跃合约）撤单失败时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderField的实例。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField的实例。
         :return:
         """
         pass
 
-    def on_leg2_action_fail(self, rtn_order_field):
+    def on_leg2_action_fail(self, rtn_order):
         """
         腿二（活跃合约）撤单失败时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderField的实例。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField的实例。
         :return:
         """
         pass
@@ -195,16 +195,16 @@ class MySpreadTrading(SpreadTradingBase):
         finally:
             return order_price
 
-    def get_order_price_l2(self, direction):
-        """
-        获取腿二（活跃合约）报单价格。与get_order_price_l1不同，要确保get_order_price_l2方法返回具体数值。
-        :param direction: b"0"表示买，其他（b"1"）表示卖，注意是bytes类型
-        :return: 买入返回卖1价，卖出返回买1价
-        """
-        if direction == b'0':
-            return self.md_b.AskPrice1
-        else:
-            return self.md_b.BidPrice1
+    # def get_order_price_l2(self, direction):
+    #     """
+    #     获取腿二（活跃合约）报单价格。与get_order_price_l1不同，要确保get_order_price_l2方法返回具体数值。
+    #     :param direction: b"0"表示买，其他（b"1"）表示卖，注意是bytes类型
+    #     :return: 买入返回卖1价，卖出返回买1价
+    #     """
+    #     if direction == '0':
+    #         return self.md_b.AskPrice1
+    #     else:
+    #         return self.md_b.BidPrice1
 
     # ############################################################################# #
     def update_open_status(self):
@@ -227,7 +227,7 @@ class MySpreadTrading(SpreadTradingBase):
 if __name__ == "__main__":
     from account_info import my_future_account_info_dict
 
-    future_account = my_future_account_info_dict['SimNow24']
+    future_account = my_future_account_info_dict['SimNow']
 
     # 共享队列
     share_queue = Queue(maxsize=100)
@@ -248,9 +248,9 @@ if __name__ == "__main__":
         SellOpenSpread=50000,  # 卖开仓价差
         BuyCloseSpread=40000,  # 买平仓价差
 
-        Lots=1,  # 下单手数
+        Lots=10,  # 下单手数
         MaxActionNum=100,  # 最大撤单次数
-        MaxPosition=10,  # 最大持仓手数
+        MaxPosition=60,  # 最大持仓手数
 
         AWaitSeconds=1,  # B合约撤单前等待秒
         BWaitSeconds=1,  # B合约撤单前等待秒

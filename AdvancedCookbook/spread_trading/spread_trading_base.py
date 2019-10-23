@@ -40,6 +40,9 @@ class SpreadTradingBase(TraderApi):
         self.with_draw_num = 0  # 撤单次数
         self.local_order_dict = {}  # 所有报单本地信息字典
 
+        self.local_rtn_order_list = []
+        self.last_rtn_order_id = 0
+
         self.work_status = -1  # 工作状态
 
         # 需要初始化的参数
@@ -193,29 +196,31 @@ class SpreadTradingBase(TraderApi):
     # ############################################################################# #
     def OnRspOrderInsert(self, pInputOrder, pRspInfo, nRequestID, bIsLast):
         """
-        录入撤单回报。
+        录入撤单回报。不适宜在回调函数里做比较耗时的操作。可参考OnRtnOrder的做法。
         :param pInputOrder: AlgoPlus.CTP.ApiStruct中InputOrderField的实例。
         :param pRspInfo: AlgoPlus.CTP.ApiStruct中RspInfoField的实例。包含错误代码ErrorID和错误信息ErrorMsg
         :param nRequestID: 
         :param bIsLast: 
         :return: 
         """
-        if pRspInfo.ErrorID != 0:
-            if pInputOrder.InstrumentID == self.parameter_field.AInstrumentID:
-                self.on_leg1_insert_fail(pInputOrder)
-            elif pInputOrder.InstrumentID == self.parameter_field.BInstrumentID:
-                self.on_leg2_insert_fail(pInputOrder)
-        self._write_log(f"{pRspInfo}=>{pInputOrder}")
-        # # 延时计时开始
-        # # 如果需要延时数据，请取消注释
-        # self.anchor_time = timer()
-        # self.timer_dict["FunctionName"] = "OnRspOrderInsert"
-        # self.timer_dict["OrderStatus"] = b""
-        # self.timer_dict["AnchorTime"] = self.anchor_time
-        # self.timer_dict["DeltaTime"] = self.anchor_time - self.start_time
-        # self.csv_writer.writerow(self.timer_dict)
-        # self.csv_file.flush()
-        # # 延时计时结束
+        if self.is_my_order(pInputOrder.OrderRef):
+            if pRspInfo.ErrorID != 0:
+                if pInputOrder.InstrumentID == self.parameter_field.AInstrumentID:
+                    self.on_leg1_insert_fail(pInputOrder)
+                elif pInputOrder.InstrumentID == self.parameter_field.BInstrumentID:
+                    self.on_leg2_insert_fail(pInputOrder)
+            self._write_log(f"{pRspInfo}=>{pInputOrder}")
+            # # 延时计时开始
+            # # 如果需要延时数据，请取消注释
+            # # 不适宜在回调函数里做比较耗时的操作。
+            # self.anchor_time = timer()
+            # self.timer_dict["FunctionName"] = "OnRspOrderInsert"
+            # self.timer_dict["OrderStatus"] = b""
+            # self.timer_dict["AnchorTime"] = self.anchor_time
+            # self.timer_dict["DeltaTime"] = self.anchor_time - self.start_time
+            # self.csv_writer.writerow(self.timer_dict)
+            # self.csv_file.flush()
+            # # 延时计时结束
 
     # ############################################################################# #
     def is_my_order(self, order_ref):
@@ -226,7 +231,7 @@ class SpreadTradingBase(TraderApi):
 
     def OnRtnOrder(self, pOrder):
         """
-        当收到订单状态变化时，可以在本方法中获得通知。
+        当收到订单状态变化时，可以在本方法中获得通知。不适宜在回调函数里做比较耗时的操作。可参考OnRtnOrder的做法。
         根据pOrder.OrderStatus的取值调用适应的交易算法。
         :param pOrder: AlgoPlus.CTP.ApiStruct中OrderField的实例。
         OrderField的OrderStatus字段枚举值及含义：
@@ -249,9 +254,9 @@ class SpreadTradingBase(TraderApi):
         (‘改单已经被拒绝 : 6’,)
         :return:
         """
-
         # # 延时计时开始
         # # 如果需要延时数据，请取消以下注释
+        # # 不适宜在回调函数里做比较耗时的操作。
         # self.anchor_time = timer()
         # self.timer_dict["FunctionName"] = "OnRtnOrder"
         # self.timer_dict["OrderStatus"] = pOrder.OrderStatus
@@ -260,120 +265,124 @@ class SpreadTradingBase(TraderApi):
         # self.csv_writer.writerow(self.timer_dict)
         # self.csv_file.flush()
         # # 延时计时结束
-
         if self.is_my_order(pOrder.OrderRef):
-            local_order_info = self.local_order_dict[pOrder.OrderRef]
+            self.local_rtn_order_list.append(pOrder.to_dict_raw())
+
+    def process_rtn_order(self):
+        last_rtn_order_id = len(self.local_rtn_order_list)
+        for rtn_order in self.local_rtn_order_list[self.last_rtn_order_id:last_rtn_order_id]:
+            local_order_info = self.local_order_dict[rtn_order["OrderRef"]]
 
             if local_order_info.OrderSysID == b'':
-                local_order_info.OrderSysID = pOrder.OrderSysID
+                local_order_info.OrderSysID = rtn_order["OrderSysID"]
 
             # 未成交
-            if local_order_info.OrderStatus == b'' and pOrder.OrderStatus == b'3':
+            if local_order_info.OrderStatus == b'' and rtn_order["OrderStatus"] == b'3':
                 local_order_info.OrderStatus = b'3'  # 未成交状态
 
             # 全部成交
-            elif pOrder.OrderStatus == b'0':
+            elif rtn_order["OrderStatus"] == b'0':
                 local_order_info.OrderStatus = b'0'  # 全部成交状态
-                if pOrder.InstrumentID == self.parameter_field.AInstrumentID:
-                    self.on_leg1_traded(pOrder)
-                elif pOrder.InstrumentID == self.parameter_field.BInstrumentID:
-                    self.on_leg2_traded(pOrder)
+                if rtn_order["InstrumentID"] == self.parameter_field.AInstrumentID:
+                    self.on_leg1_traded(rtn_order)
+                elif rtn_order["InstrumentID"] == self.parameter_field.BInstrumentID:
+                    self.on_leg2_traded(rtn_order)
 
             # 部分成交
-            elif pOrder.OrderStatus == b'1':
+            elif rtn_order["OrderStatus"] == b'1':
                 local_order_info.OrderStatus = b'1'  # 部分成交状态
-                if pOrder.InstrumentID == self.parameter_field.AInstrumentID:
-                    self.on_leg1_traded(pOrder)
-                elif pOrder.InstrumentID == self.parameter_field.BInstrumentID:
-                    self.on_leg2_traded(pOrder)
+                if rtn_order["InstrumentID"] == self.parameter_field.AInstrumentID:
+                    self.on_leg1_traded(rtn_order)
+                elif rtn_order["InstrumentID"] == self.parameter_field.BInstrumentID:
+                    self.on_leg2_traded(rtn_order)
 
             # 撤单成功
-            elif pOrder.OrderStatus == b'5':
+            elif rtn_order["OrderStatus"] == b'5':
                 local_order_info.OrderStatus = b'5'  # 已撤单状态
-                if pOrder.InstrumentID == self.parameter_field.AInstrumentID:
+                if rtn_order["InstrumentID"] == self.parameter_field.AInstrumentID:
                     self.with_draw_num += 1
-                    self.on_leg1_action(pOrder)
-                elif pOrder.InstrumentID == self.parameter_field.BInstrumentID:
-                    self.on_leg2_action(pOrder)
+                    self.on_leg1_action(rtn_order)
+                elif rtn_order["InstrumentID"] == self.parameter_field.BInstrumentID:
+                    self.on_leg2_action(rtn_order)
 
             # 委托失败
-            elif pOrder.OrderSubmitStatus == b'4':
+            elif rtn_order["OrderSubmitStatus"] == b'4':
                 local_order_info.OrderStatus = b'9'  # 委托失败状态
-                self.on_insert_order_fail(pOrder)
-                if pOrder.InstrumentID == self.parameter_field.AInstrumentID:
-                    self.on_leg1_insert_fail(pOrder)
-                elif pOrder.InstrumentID == self.parameter_field.BInstrumentID:
-                    self.on_leg2_insert_fail(pOrder)
+                if rtn_order["InstrumentID"] == self.parameter_field.AInstrumentID:
+                    self.on_leg1_insert_fail(rtn_order)
+                elif rtn_order["InstrumentID"] == self.parameter_field.BInstrumentID:
+                    self.on_leg2_insert_fail(rtn_order)
 
             # 撤单失败
-            elif pOrder.OrderSubmitStatus == b'5':
+            elif rtn_order["OrderSubmitStatus"] == b'5':
                 local_order_info.OrderStatus = b'8'  # 撤单失败状态
-                self.on_order_action_fail(pOrder)
-                if pOrder.InstrumentID == self.parameter_field.AInstrumentID:
-                    self.on_leg1_action_fail(pOrder)
-                elif pOrder.InstrumentID == self.parameter_field.BInstrumentID:
-                    self.on_leg2_action_fail(pOrder)
+                if rtn_order["InstrumentID"] == self.parameter_field.AInstrumentID:
+                    self.on_leg1_action_fail(rtn_order)
+                elif rtn_order["InstrumentID"] == self.parameter_field.BInstrumentID:
+                    self.on_leg2_action_fail(rtn_order)
 
-    def on_leg1_traded(self, rtn_order_field):
+        self.last_rtn_order_id = last_rtn_order_id
+
+    def on_leg1_traded(self, rtn_order):
         """
         腿一（不活跃合约）成交时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderField的实例。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField的实例。
         :return:
         """
         pass
 
-    def on_leg2_traded(self, rtn_order_field):
+    def on_leg2_traded(self, rtn_order):
         """
         腿二（活跃合约）成交时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderField的实例。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField的实例。
         :return:
         """
         pass
 
-    def on_leg1_action(self, rtn_order_field):
+    def on_leg1_action(self, rtn_order):
         """
         腿一（不活跃合约）撤单成功时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderField的实例。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField的实例。
         :return:
         """
         pass
 
-    def on_leg2_action(self, rtn_order_field):
+    def on_leg2_action(self, rtn_order):
         """
         腿二（活跃合约）撤单成功时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderField的实例。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField的实例。
         :return:
         """
         pass
 
-    def on_leg1_insert_fail(self, rtn_order_field):
+    def on_leg1_insert_fail(self, rtn_order):
         """
         腿一（不活跃合约）订单失败时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderField或者InputOrder的实例。注意使用其公共字段。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField或者InputOrder的实例。注意使用其公共字段。
         :return:
         """
         pass
 
-    def on_leg2_insert_fail(self, rtn_order_field):
+    def on_leg2_insert_fail(self, rtn_order):
         """
         腿一（不活跃合约）报单失败时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderField或者InputOrder的实例。注意使用其公共字段。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField或者InputOrder的实例。注意使用其公共字段。
         :return:
         """
         pass
 
-    def on_leg1_action_fail(self, rtn_order_field):
+    def on_leg1_action_fail(self, rtn_order):
         """
         腿一（不活跃合约）撤单失败时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderField或者InputOrderActionField的实例。注意使用其公共字段。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField或者InputOrderActionField的实例。注意使用其公共字段。
         :return:
         """
         pass
 
-    def on_leg2_action_fail(self, rtn_order_field):
+    def on_leg2_action_fail(self, rtn_order):
         """
         腿二（活跃合约）撤单失败时需要执行的交易逻辑。
-        :param rtn_order_field: AlgoPlus.CTP.ApiStruct中OrderField或者InputOrderActionField的实例。注意使用其公共字段。
+        :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField或者InputOrderActionField的实例。注意使用其公共字段。
         :return:
         """
         pass
@@ -381,7 +390,7 @@ class SpreadTradingBase(TraderApi):
     # ############################################################################# #
     def OnRtnTrade(self, pTrade):
         """
-        当报单成交时，可以在本方法中获得通知。
+        当报单成交时，可以在本方法中获得通知。不适宜在回调函数里做比较耗时的操作。可参考OnRtnOrder的做法。
         TradeField包含成交价格，而OrderField则没有。
         如果不需要成交价格，可忽略该通知，使用OrderField。
         :param pTrade: AlgoPlus.CTP.ApiStruct中的TradeField实例。
@@ -392,27 +401,29 @@ class SpreadTradingBase(TraderApi):
     # ############################################################################# #
     def OnErrRtnOrderInsert(self, pInputOrder, pRspInfo):
         """
-        订单错误通知。
+        订单错误通知。不适宜在回调函数里做比较耗时的操作。可参考OnRtnOrder的做法。
         :param pInputOrder: AlgoPlus.CTP.ApiStruct中的InputOrderField实例。
         :param pRspInfo: AlgoPlus.CTP.ApiStruct中RspInfoField的实例。包含错误代码ErrorID和错误信息ErrorMsg
         :return:
         """
-        if pRspInfo.ErrorID != 0:
-            if pInputOrder.InstrumentID == self.parameter_field.AInstrumentID:
-                self.on_leg1_action_fail(pInputOrder)
-            elif pInputOrder.InstrumentID == self.parameter_field.BInstrumentID:
-                self.on_leg2_action_fail(pInputOrder)
-        self._write_log(f"{pRspInfo}=>{pInputOrder}")
-        # # 延时计时开始
-        # # 如果需要延时数据，请取消注释
-        # self.anchor_time = timer()
-        # self.timer_dict["FunctionName"] = "OnErrRtnOrderInsert"
-        # self.timer_dict["OrderStatus"] = b""
-        # self.timer_dict["AnchorTime"] = self.anchor_time
-        # self.timer_dict["DeltaTime"] = self.anchor_time - self.start_time
-        # self.csv_writer.writerow(self.timer_dict)
-        # self.csv_file.flush()
-        # # 延时计时结束
+        if self.is_my_order(pInputOrder.OrderRef):
+            if pRspInfo.ErrorID != 0:
+                if pInputOrder.InstrumentID == self.parameter_field.AInstrumentID:
+                    self.on_leg1_action_fail(pInputOrder)
+                elif pInputOrder.InstrumentID == self.parameter_field.BInstrumentID:
+                    self.on_leg2_action_fail(pInputOrder)
+            self._write_log(f"{pRspInfo}=>{pInputOrder}")
+            # # 延时计时开始
+            # # 如果需要延时数据，请取消注释
+            # # 不适宜在回调函数里做比较耗时的操作。
+            # self.anchor_time = timer()
+            # self.timer_dict["FunctionName"] = "OnErrRtnOrderInsert"
+            # self.timer_dict["OrderStatus"] = b""
+            # self.timer_dict["AnchorTime"] = self.anchor_time
+            # self.timer_dict["DeltaTime"] = self.anchor_time - self.start_time
+            # self.csv_writer.writerow(self.timer_dict)
+            # self.csv_file.flush()
+            # # 延时计时结束
 
     # ############################################################################# #
     def req_order_action(self, exchange_id, instrument_id, order_ref, order_sysid=''):
@@ -461,30 +472,32 @@ class SpreadTradingBase(TraderApi):
     # ############################################################################# #
     def OnRspOrderAction(self, pInputOrderAction, pRspInfo, nRequestID, bIsLast):
         """
-        录入撤单回报。
+        录入撤单回报。不适宜在回调函数里做比较耗时的操作。可参考OnRtnOrder的做法。
         :param pInputOrderAction: AlgoPlus.CTP.ApiStruct中InputOrderActionField的实例。
         :param pRspInfo: AlgoPlus.CTP.ApiStruct中RspInfoField的实例。包含错误代码ErrorID和错误信息ErrorMsg
         :param nRequestID:
         :param bIsLast:
         :return:
         """
-        if pRspInfo.ErrorID != 0:
-            if pInputOrderAction.InstrumentID == self.parameter_field.AInstrumentID:
-                self.on_leg1_action_fail(pInputOrderAction)
-            elif pInputOrderAction.InstrumentID == self.parameter_field.BInstrumentID:
-                self.on_leg2_action_fail(pInputOrderAction)
+        if self.is_my_order(pInputOrderAction.OrderRef):
+            if pRspInfo.ErrorID != 0:
+                if pInputOrderAction.InstrumentID == self.parameter_field.AInstrumentID:
+                    self.on_leg1_action_fail(pInputOrderAction)
+                elif pInputOrderAction.InstrumentID == self.parameter_field.BInstrumentID:
+                    self.on_leg2_action_fail(pInputOrderAction)
 
-        self._write_log(f"{pRspInfo}=>{pInputOrderAction}")
-        # # 延时计时开始
-        # # 如果需要延时数据，请取消注释
-        # self.anchor_time = timer()
-        # self.timer_dict["FunctionName"] = "OnRspOrderAction"
-        # self.timer_dict["OrderStatus"] = b""
-        # self.timer_dict["AnchorTime"] = self.anchor_time
-        # self.timer_dict["DeltaTime"] = self.anchor_time - self.start_time
-        # self.csv_writer.writerow(self.timer_dict)
-        # self.csv_file.flush()
-        # # 延时计时结束
+            self._write_log(f"{pRspInfo}=>{pInputOrderAction}")
+            # # 延时计时开始
+            # # 如果需要延时数据，请取消注释
+            # # 不适宜在回调函数里做比较耗时的操作。
+            # self.anchor_time = timer()
+            # self.timer_dict["FunctionName"] = "OnRspOrderAction"
+            # self.timer_dict["OrderStatus"] = b""
+            # self.timer_dict["AnchorTime"] = self.anchor_time
+            # self.timer_dict["DeltaTime"] = self.anchor_time - self.start_time
+            # self.csv_writer.writerow(self.timer_dict)
+            # self.csv_file.flush()
+            # # 延时计时结束
 
     # ############################################################################# #
     def check_local_orders(self):
@@ -645,13 +658,12 @@ class SpreadTradingBase(TraderApi):
                     if last_md.InstrumentID == self.parameter_field.AInstrumentID:
                         self.md_a = last_md
                         self.server_time = max(self.server_time, self.md_a.UpdateTime)
-                        print(self.md_a)
                     elif last_md.InstrumentID == self.parameter_field.BInstrumentID:
                         self.md_b = last_md
                         self.server_time = max(self.server_time, self.md_a.UpdateTime)
-                        print(self.md_b)
 
                 if 0 < self.work_status < 4:
+                    self.process_rtn_order()
                     self.check_local_orders()
                     if self.update_open_status():
                         self.update_buy_spread_open()

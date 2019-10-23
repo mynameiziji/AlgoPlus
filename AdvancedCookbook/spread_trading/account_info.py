@@ -44,7 +44,7 @@ my_future_account_info_dict = {
         app_id='simnow_client_test',  # 认证使用AppID
         auth_code='0000000000000000',  # 认证使用授权码
         # 订阅合约列表
-        instrument_id_list=[b'rb2001', b'ni2001', b'ag1912', b'j2001', b'TA001'],
+        instrument_id_list=[b'ni1912', b'ni2001'],
     ),
 
     # 非交易使用测试
