@@ -75,14 +75,14 @@ cdef class TraderApi:
             self.auth_code = auth_code if isinstance(auth_code, bytes) else auth_code.encode(encoding='utf-8')
 
             # ############################################################################# #
-            page_dir = page_dir if isinstance(page_dir, str) else page_dir.decode(encoding='utf-8')
-            flow_path = (page_dir if page_dir.endswith('\\') else page_dir + '\\') + self.investor_id.decode(encoding='utf-8') + '\\td.con\\'
+            page_dir = os.path.join(page_dir if isinstance(page_dir, str) else page_dir.decode(encoding='utf-8'), self.investor_id.decode(encoding='utf-8'))
+            self.page_dir = (page_dir if page_dir.endswith(os.path.sep) else page_dir + os.path.sep)
+            flow_path = self.page_dir + 'td.con' + os.path.sep
             tmp_dir = ''
-            for dir in flow_path.split('\\'):
+            for dir in flow_path.split(os.path.sep):
                 tmp_dir = os.path.join(tmp_dir, dir)
                 if not os.path.exists(tmp_dir):
                     os.mkdir(tmp_dir)
-            self.flow_path = flow_path.encode(encoding='utf-8')
 
             self.private_resume_type = private_resume_type
             self.public_resume_type = public_resume_type
@@ -205,7 +205,7 @@ cdef class TraderApi:
     def Init_Base(self):
         cdef int bInit = -1
         try:
-            self._api = CreateFtdcTraderApi(self.flow_path)
+            self._api = CreateFtdcTraderApi((self.page_dir + 'td.con' + os.path.sep).encode(encoding='utf-8'))
             if self._api is NULL:
                 raise MemoryError()
             self._spi = new CTraderSpi(<PyObject *> self)

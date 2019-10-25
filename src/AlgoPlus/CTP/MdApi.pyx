@@ -76,13 +76,13 @@ cdef class MdApi():
 
             # ############################################################################# #
             page_dir = os.path.join(page_dir if isinstance(page_dir, str) else page_dir.decode(encoding='utf-8'), self.investor_id.decode(encoding='utf-8'))
-            flow_path = (page_dir if page_dir.endswith('\\') else page_dir + '\\') + 'md.con\\'
+            self.page_dir = (page_dir if page_dir.endswith(os.path.sep) else page_dir + os.path.sep)
+            flow_path = self.page_dir + 'md.con' + os.path.sep
             tmp_dir = ''
-            for dir in flow_path.split('\\'):
+            for dir in flow_path.split(os.path.sep):
                 tmp_dir = os.path.join(tmp_dir, dir)
                 if not os.path.exists(tmp_dir):
                     os.mkdir(tmp_dir)
-            self.flow_path = flow_path.encode(encoding='utf-8')
 
             self.using_udp = using_udp
             self.multicast = multicast
@@ -203,7 +203,7 @@ cdef class MdApi():
     def Init_Base(self):
         cdef int bInit = -1
         try:
-            self._api = CreateFtdcMdApi(self.flow_path, self.using_udp, self.multicast)
+            self._api = CreateFtdcMdApi((self.page_dir + 'md.con' + os.path.sep).encode(encoding='utf-8'), self.using_udp, self.multicast)
             if self._api is NULL:
                 raise MemoryError()
             self._spi = new CMdSpi(<PyObject *> self)
