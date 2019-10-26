@@ -73,10 +73,16 @@ class MySpreadTrading(SpreadTradingBase):
             self.order_ref += 1
             if rtn_order["Direction"] == b'0':
                 order_price = self.get_order_price_l2(b'1')  # 腿二报单价格
-                self.sell_open(self.parameter_field.BExchangeID, self.parameter_field.BInstrumentID, order_price, volume_traded, self.order_ref)
+                if rtn_order["CombOffsetFlag"] == b'0':
+                    self.sell_open(self.parameter_field.BExchangeID, self.parameter_field.BInstrumentID, order_price, volume_traded, self.order_ref)
+                else:
+                    self.sell_close(self.parameter_field.BExchangeID, self.parameter_field.BInstrumentID, order_price, volume_traded, self.order_ref)
             else:
                 order_price = self.get_order_price_l2(b'0')  # 腿二报单价格
-                self.buy_open(self.parameter_field.BExchangeID, self.parameter_field.BInstrumentID, order_price, volume_traded, self.order_ref)
+                if rtn_order["CombOffsetFlag"] == b'0':
+                    self.buy_open(self.parameter_field.BExchangeID, self.parameter_field.BInstrumentID, order_price, volume_traded, self.order_ref)
+                else:
+                    self.buy_close(self.parameter_field.BExchangeID, self.parameter_field.BInstrumentID, order_price, volume_traded, self.order_ref)
 
     def on_leg2_traded(self, rtn_order):
         """
@@ -92,12 +98,6 @@ class MySpreadTrading(SpreadTradingBase):
                 self.position_b += volume_traded  # 腿二总持仓
             else:
                 self.position_b -= volume_traded  # 腿二总持仓
-            if rtn_order["VolumeTotal"] == 0:
-                self.sig_stage = 0
-                if self.position_b == 0:
-                    self.position_status = 0
-                self.local_order_dict.clear()
-                self._write_log(f"腿一与腿二配对完成！目前持仓情况，腿一：{self.position_a}，腿二：{self.position_b}")
 
     def on_leg1_action(self, rtn_order):
         """
@@ -105,9 +105,7 @@ class MySpreadTrading(SpreadTradingBase):
         :param rtn_order: AlgoPlus.CTP.ApiStruct中OrderField的实例。
         :return:
         """
-        self.sig_stage = 0
-        if self.position_a == 0:
-            self.position_status = 0
+        pass
 
     def on_leg2_action(self, rtn_order):
         """
@@ -187,11 +185,13 @@ class MySpreadTrading(SpreadTradingBase):
         order_price = None
         try:
             if direction == b'0':
-                if self.md_a.BidPrice1 - self.md_b.BidPrice1 < self.parameter_field.BuyOpenSpread if offset_flag == b'0' else self.parameter_field.BuyCloseSpread:
-                    order_price = self.md_a.BidPrice1 + self.parameter_field.APriceTick
+                if (offset_flag == b'0' and self.md_a["BidPrice1"] - self.md_b["BidPrice1"] < self.parameter_field.BuyOpenSpread) \
+                        or (offset_flag != b'0' and self.md_a["BidPrice1"] - self.md_b["BidPrice1"] > self.parameter_field.BuyOpenSpread):
+                    order_price = self.md_a["BidPrice1"] + self.parameter_field.APriceTick
             else:
-                if self.md_a.AskPrice1 - self.md_b.AskPrice1 > self.parameter_field.SellOpenSpread if offset_flag == b'0' else self.parameter_field.SellCloseSpread:
-                    order_price = self.md_a.AskPrice1 - self.parameter_field.APriceTick
+                if (offset_flag == b'0' and self.md_a["AskPrice1"] - self.md_b["AskPrice1"] > self.parameter_field.SellOpenSpread) \
+                        or (offset_flag != b'0' and self.md_a["AskPrice1"] - self.md_b["AskPrice1"] < self.parameter_field.SellCloseSpread):
+                    order_price = self.md_a["AskPrice1"] - self.parameter_field.APriceTick
         finally:
             return order_price
 
@@ -202,9 +202,9 @@ class MySpreadTrading(SpreadTradingBase):
     #     :return: 买入返回卖1价，卖出返回买1价
     #     """
     #     if direction == '0':
-    #         return self.md_b.AskPrice1
+    #         return self.md_b["AskPrice1"]
     #     else:
-    #         return self.md_b.BidPrice1
+    #         return self.md_b["BidPrice1"]
 
     # ############################################################################# #
     def update_open_status(self):
@@ -227,7 +227,7 @@ class MySpreadTrading(SpreadTradingBase):
 if __name__ == "__main__":
     from account_info import my_future_account_info_dict
 
-    future_account = my_future_account_info_dict['SimNow']
+    future_account = my_future_account_info_dict['SimNow24']
 
     # 共享队列
     share_queue = Queue(maxsize=100)
@@ -243,14 +243,14 @@ if __name__ == "__main__":
         BPriceTick=10,  # B最小变动价位
         BExchangeID=b'SHFE',  # B交易所代码
 
-        BuyOpenSpread=30000,  # 买开仓价差
-        SellCloseSpread=0,  # 卖平仓价差
-        SellOpenSpread=50000,  # 卖开仓价差
-        BuyCloseSpread=40000,  # 买平仓价差
+        BuyOpenSpread=-2500,  # 买开仓价差
+        SellCloseSpread=-2000,  # 卖平仓价差
+        SellOpenSpread=-1500,  # 卖开仓价差
+        BuyCloseSpread=-2000,  # 买平仓价差
 
         Lots=10,  # 下单手数
         MaxActionNum=100,  # 最大撤单次数
-        MaxPosition=60,  # 最大持仓手数
+        MaxPosition=10,  # 最大持仓手数
 
         AWaitSeconds=1,  # B合约撤单前等待秒
         BWaitSeconds=1,  # B合约撤单前等待秒

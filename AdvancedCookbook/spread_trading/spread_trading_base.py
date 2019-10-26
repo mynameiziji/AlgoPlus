@@ -447,7 +447,7 @@ class SpreadTradingBase(TraderApi):
             OrderSysID=order_sysid,
             OrderRef=order_ref,
         )
-        l_retVal = self.ReqOrderAction(input_order_action_field)
+        self.ReqOrderAction(input_order_action_field)
 
     # ############################################################################# #
     # # 延时计时开始
@@ -505,16 +505,33 @@ class SpreadTradingBase(TraderApi):
         检查所有挂单是否满足撤单条件。
         :return:
         """
+        has_untraded_order = False
         try:
             for order_ref in list(self.local_order_dict):
                 local_order_field = self.local_order_dict[order_ref]
                 if local_order_field.OrderStatus == b'1' or local_order_field.OrderStatus == b'3':
+                    has_untraded_order = True
                     if local_order_field.InstrumentID == self.parameter_field.AInstrumentID:
                         self.with_draw_leg1_order(local_order_field)
                     elif local_order_field.InstrumentID == self.parameter_field.BInstrumentID:
                         self.with_draw_leg2_order(local_order_field)
+                elif local_order_field.OrderStatus != b'0' and local_order_field.OrderStatus != b'5':
+                    has_untraded_order = True
+
         except Exception as err:
             pass
+        finally:
+            if not has_untraded_order:
+                if self.position_a == self.position_b:
+                    self.sig_stage = 0
+                    self.local_order_dict.clear()
+                if self.position_b == 0:
+                    self.position_status = 0
+                elif self.position_status > 0:
+                    self.position_status = 1
+                elif self.position_status < 0:
+                    self.position_status = -1
+                self._write_log(f"腿一撤单！目前持仓情况，腿一：{self.position_a}，腿二：{self.position_b}，sig_stage：{self.sig_stage}，position_status：{self.position_status}")
 
     def with_draw_leg1_order(self, local_order_field):
         """
@@ -549,9 +566,9 @@ class SpreadTradingBase(TraderApi):
         :return: 买入返回卖1价，卖出返回买1价
         """
         if direction == b'0':
-            return self.md_b.AskPrice1
+            return self.md_b["AskPrice1"]
         else:
-            return self.md_b.BidPrice1
+            return self.md_b["BidPrice1"]
 
     # ############################################################################# #
     def update_buy_spread_open(self):
@@ -584,7 +601,7 @@ class SpreadTradingBase(TraderApi):
         order_price为None表示不满足交易条件，否则满足交易条件。
         :return:
         """
-        if self.sig_stage == 0 and (self.position_status == 1 and self.sig_stage == 0):
+        if self.sig_stage == 0 and self.position_status == 1:
             order_price = self.get_order_price_l1(b'1', b'1')
             if order_price:
                 self.position_status = 2
@@ -624,7 +641,7 @@ class SpreadTradingBase(TraderApi):
         order_price为None表示不满足交易条件，否则满足交易条件。
         :return:
         """
-        if self.sig_stage == 0 and (self.position_status == -1 and self.sig_stage == 0):
+        if self.sig_stage == 0 and self.position_status == -1:
             order_price = self.get_order_price_l1(b'0', b'1')
             if order_price:
                 self.position_status = -2
@@ -655,12 +672,14 @@ class SpreadTradingBase(TraderApi):
             if self.status == 0 and self.work_status >= 0:
                 while not self.md_queue.empty():
                     last_md = self.md_queue.get(block=False)
-                    if last_md.InstrumentID == self.parameter_field.AInstrumentID:
+                    if last_md["InstrumentID"] == self.parameter_field.AInstrumentID:
                         self.md_a = last_md
-                        self.server_time = max(self.server_time, self.md_a.UpdateTime)
-                    elif last_md.InstrumentID == self.parameter_field.BInstrumentID:
+                        self.server_time = max(self.server_time, self.md_a["UpdateTime"])
+                        print(self.md_a)
+                    elif last_md["InstrumentID"] == self.parameter_field.BInstrumentID:
                         self.md_b = last_md
-                        self.server_time = max(self.server_time, self.md_a.UpdateTime)
+                        self.server_time = max(self.server_time, self.md_b["UpdateTime"])
+                        print(self.md_b)
 
                 if 0 < self.work_status < 4:
                     self.process_rtn_order()
@@ -682,8 +701,8 @@ class SpreadTradingBase(TraderApi):
                 elif self.work_status >= 4:
                     self._write_log(f"开仓与平仓均已暂停！")
                     break
-                elif self.md_a is not None and self.md_b is not None and \
-                        0 < self.md_a.AskPrice1 < 9999999 and 0 < self.md_a.BidPrice1 < 9999999 and 0 < self.md_b.AskPrice1 < 9999999 and 0 < self.md_b.BidPrice1 < 9999999:
+                elif self.md_a and self.md_b and \
+                        0 < self.md_a["AskPrice1"] < 9999999 and 0 < self.md_a["BidPrice1"] < 9999999 and 0 < self.md_b["AskPrice1"] < 9999999 and 0 < self.md_b["BidPrice1"] < 9999999:
                     self.work_status = 1
             else:
                 sleep(1)
