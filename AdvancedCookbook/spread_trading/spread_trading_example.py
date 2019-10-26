@@ -185,13 +185,10 @@ class MySpreadTrading(SpreadTradingBase):
         order_price = None
         try:
             if direction == b'0':
-                if (offset_flag == b'0' and self.md_a["BidPrice1"] - self.md_b["BidPrice1"] < self.parameter_field.BuyOpenSpread) \
-                        or (offset_flag != b'0' and self.md_a["BidPrice1"] - self.md_b["BidPrice1"] > self.parameter_field.BuyOpenSpread):
+                if self.md_a["BidPrice1"] - self.md_b["BidPrice1"] < self.parameter_field.BuyOpenSpread if offset_flag == b'0' else self.parameter_field.BuyCloseSpread:
                     order_price = self.md_a["BidPrice1"] + self.parameter_field.APriceTick
-            else:
-                if (offset_flag == b'0' and self.md_a["AskPrice1"] - self.md_b["AskPrice1"] > self.parameter_field.SellOpenSpread) \
-                        or (offset_flag != b'0' and self.md_a["AskPrice1"] - self.md_b["AskPrice1"] < self.parameter_field.SellCloseSpread):
-                    order_price = self.md_a["AskPrice1"] - self.parameter_field.APriceTick
+            elif self.md_a["AskPrice1"] - self.md_b["AskPrice1"] > self.parameter_field.SellOpenSpread if offset_flag == b'0' else self.parameter_field.SellCloseSpread:
+                order_price = self.md_a["AskPrice1"] - self.parameter_field.APriceTick
         finally:
             return order_price
 

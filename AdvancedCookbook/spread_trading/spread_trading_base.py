@@ -521,17 +521,17 @@ class SpreadTradingBase(TraderApi):
         except Exception as err:
             pass
         finally:
-            if not has_untraded_order:
+            if not has_untraded_order and self.sig_stage != 0:
                 if self.position_a == self.position_b:
                     self.sig_stage = 0
                     self.local_order_dict.clear()
-                if self.position_b == 0:
-                    self.position_status = 0
-                elif self.position_status > 0:
-                    self.position_status = 1
-                elif self.position_status < 0:
-                    self.position_status = -1
-                self._write_log(f"腿一撤单！目前持仓情况，腿一：{self.position_a}，腿二：{self.position_b}，sig_stage：{self.sig_stage}，position_status：{self.position_status}")
+                    if self.position_b == 0:
+                        self.position_status = 0
+                    elif self.position_status > 0:
+                        self.position_status = 1
+                    elif self.position_status < 0:
+                        self.position_status = -1
+                    self._write_log(f"腿一与腿二配对！目前持仓情况，腿一：{self.position_a}，腿二：{self.position_b}，sig_stage：{self.sig_stage}，position_status：{self.position_status}")
 
     def with_draw_leg1_order(self, local_order_field):
         """
@@ -675,11 +675,9 @@ class SpreadTradingBase(TraderApi):
                     if last_md["InstrumentID"] == self.parameter_field.AInstrumentID:
                         self.md_a = last_md
                         self.server_time = max(self.server_time, self.md_a["UpdateTime"])
-                        print(self.md_a)
                     elif last_md["InstrumentID"] == self.parameter_field.BInstrumentID:
                         self.md_b = last_md
                         self.server_time = max(self.server_time, self.md_b["UpdateTime"])
-                        print(self.md_b)
 
                 if 0 < self.work_status < 4:
                     self.process_rtn_order()
