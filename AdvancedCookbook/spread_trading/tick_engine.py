@@ -19,4 +19,4 @@ class TickEngine(MdApi):
     def OnRtnDepthMarketData(self, pDepthMarketData):
         # 将行情放入共享队列
         for md_queue in self.md_queue_list:
-            md_queue.put(pDepthMarketData)
+            md_queue.put(pDepthMarketData.to_dict_raw())
