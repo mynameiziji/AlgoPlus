@@ -6,10 +6,12 @@
 # 项目网址：http://www.ctp.plus
 # 项目网址：http://www.7jia.com
 
+import os
+
 BASE_LOCATION = "."
-MD_LOCATION = BASE_LOCATION + "\\MarketData"
-TD_LOCATION = BASE_LOCATION + "\\TradingData"
-SD_LOCATION = BASE_LOCATION + "\\StrategyData"
+MD_LOCATION = BASE_LOCATION + os.path.sep + "MarketData"
+TD_LOCATION = BASE_LOCATION + os.path.sep + "TradingData"
+SD_LOCATION = BASE_LOCATION + os.path.sep + "StrategyData"
 
 
 class FutureAccountInfo:
