@@ -16,6 +16,13 @@ from tick_engine import TickEngine
 
 
 class MyProfitLossManager(ProfitLossManagerBase):
+    def __init__(self, td_server, broker_id, investor_id, password, app_id, auth_code, md_queue=None
+                 , page_dir='', private_resume_type=2, public_resume_type=2):
+        # 初始化参数
+        self.init_parameter()
+
+        self.Join()
+
     # ############################################################################# #
     def init_parameter(self):
         """
@@ -61,7 +68,6 @@ if __name__ == "__main__":
                                                                , share_queue
                                                                , future_account.td_page_dir)
                              )
-    #
 
     md_process.start()
     trader_process.start()

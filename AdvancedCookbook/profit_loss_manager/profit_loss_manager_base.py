@@ -19,21 +19,20 @@ class ProfitLossManagerBase(TraderApi):
     def __init__(self, td_server, broker_id, investor_id, password, app_id, auth_code, md_queue=None
                  , page_dir='', private_resume_type=2, public_resume_type=2):
 
+        self.server_time = [b"00:00:00", b"00:00:00"]
         self.md_dict = {}  # 行情字典
-        self.order_ref = None  # 报单引用
 
         self.local_rtn_trade_list = []  # 成交通知列表
         self.last_rtn_trade_id = 0  # 已处理成交ID
         self.local_position_dict = {}  # {"InstrumentID": {"ActionNum": 0, "LongVolume": 0, "LongPositionList": [], "ShortVolume": 0, "ShortPositionList": []}}
         self.instrument_id_registered = []  # 所有持仓合约，包括已平
 
-        self.order_action_num_dict = {}  # 撤单次数 # {"InstrumentID": 0}
+        self.action_num_dict = {}  # 撤单次数 # {"InstrumentID": 0}
 
         # 需要初始化的参数
         self.pl_parameter_dict = {}  # 止盈止损参数 # {"InstrumentID": {b"0": []}}
-
-        # 初始化参数
-        self.init_parameter()
+        self.order_ref = None  # 报单引用
+        self.order_ref_range = []
 
         # # 延时计时开始
         # # 如果需要延时数据，请取消以下注释
@@ -52,8 +51,6 @@ class ProfitLossManagerBase(TraderApi):
         # self.csv_file = None # csv file对象
         # self.csv_writer = None# csv writer对象
         # # 延时计时开始
-
-        self.Join()
 
     # ############################################################################# #
     def init_parameter(self):
@@ -162,6 +159,13 @@ class ProfitLossManagerBase(TraderApi):
     #     # 延时计时结束
 
     # ############################################################################# #
+    def is_my_order(self, order_ref):
+        """
+        以OrderRef标识本策略订单。
+        """
+        return True
+
+    # ############################################################################# #
     def OnRspOrderInsert(self, pInputOrder, pRspInfo, nRequestID, bIsLast):
         """
         录入撤单回报。不适宜在回调函数里做比较耗时的操作。可参考OnRtnOrder的做法。
@@ -186,6 +190,9 @@ class ProfitLossManagerBase(TraderApi):
             # self.csv_writer.writerow(self.timer_dict)
             # self.csv_file.flush()
             # # 延时计时结束
+
+    def on_insert_fail(self, rtn_order):
+        pass
 
     # ############################################################################# #
     def OnRtnOrder(self, pOrder):
@@ -224,11 +231,12 @@ class ProfitLossManagerBase(TraderApi):
         # self.csv_writer.writerow(self.timer_dict)
         # self.csv_file.flush()
         # # 延时计时结束
-        if pOrder.OrderStatus == b"5":
-            if pOrder.InstrumentID in self.action_num_dict.keys():
-                self.action_num_dict[pOrder.InstrumentID] += 1
-            else:
-                self.action_num_dict[pOrder.InstrumentID] = 1
+        if self.is_my_order(pOrder.OrderRef):
+            if pOrder.OrderStatus == b"5":
+                if pOrder.InstrumentID in self.action_num_dict.keys():
+                    self.action_num_dict[pOrder.InstrumentID] += 1
+                else:
+                    self.action_num_dict[pOrder.InstrumentID] = 1
 
     # ############################################################################# #
     def OnRtnTrade(self, pTrade):
@@ -239,7 +247,8 @@ class ProfitLossManagerBase(TraderApi):
         :param pTrade: AlgoPlus.CTP.ApiStruct中的TradeField实例。
         :return:
         """
-        self.local_rtn_trade_list.append(pTrade.to_dict_raw())
+        if self.is_my_order(pTrade.OrderRef):
+            self.local_rtn_trade_list.append(pTrade.to_dict_raw())
 
     def process_rtn_trade(self):
         """
