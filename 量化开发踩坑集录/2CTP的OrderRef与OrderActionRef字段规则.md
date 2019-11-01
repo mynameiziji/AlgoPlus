@@ -12,4 +12,4 @@ CTP量化投资API要求报单的OrderRef/OrderActionRef字段在同一线程内
 
 * 如果为每个策略开启一个线程，即一个TraderApi管理一个策略，则指定策略ID，为每个策略分配一个报单区间，据此在回报/通知中分辨出对应策略。
 
-* 如果一个TraderApi作为主引擎管理多个策略，则需要在引擎层面管理OrderRef/OrderActionRef，然后维护策略与OrderRef/OrderActionRef的关系表，据此在回报/通知中分辨出对应策略。
+* 如果一个TraderApi作为主引擎管理多个策略，则需要在引擎层面管理OrderRef/OrderActionRef，然后维护策略与OrderRef/OrderActionRef的关系表，或者制定一个可标识策略的递增规则，据此在回报/通知中分辨出对应策略。
