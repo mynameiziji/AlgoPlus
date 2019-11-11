@@ -43,3 +43,10 @@ class BaseField(Structure):
     @classmethod
     def from_dict(cls, obj):
         return cls(**obj)
+
+    @classmethod
+    def get_key_field_list(cls):
+        key_field_list = []
+        for field_name, _ in cls._fields_:
+            key_field_list.append(field_name)
+        return key_field_list
