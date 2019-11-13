@@ -18,6 +18,10 @@ from tick_engine import TickEngine
 class MyProfitLossManager(ProfitLossManagerBase):
     def __init__(self, td_server, broker_id, investor_id, password, app_id, auth_code, md_queue=None
                  , page_dir='', private_resume_type=2, public_resume_type=2):
+
+        super(MyProfitLossManager, self).__init__(td_server, broker_id, investor_id, password, app_id, auth_code, md_queue
+                                                  , page_dir, private_resume_type, public_resume_type)
+
         # 初始化参数
         self.init_parameter()
 
